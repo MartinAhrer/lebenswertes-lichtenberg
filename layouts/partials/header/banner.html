@@ -1,0 +1,9 @@
+{{/* The theme's header, followed by the site-wide banner. Selected by header.layout in params.toml. */}}
+{{ partial "header/basic.html" . }}
+{{ with resources.Get "img/banner.jpg" }}
+  {{ $image := .Fill "1600x400 Top" }}
+  <div class="site-banner">
+    <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="" class="nozoom" />
+    <p class="site-banner-title">{{ site.Title }}</p>
+  </div>
+{{ end }}

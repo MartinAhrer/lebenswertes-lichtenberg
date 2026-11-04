@@ -24,7 +24,7 @@ Facts checked on 2026-11-04 that shape this design:
 
 **Non-Goals:**
 
-- Custom layouts, CSS or a Node.js/Tailwind build. Blowfish ships compiled CSS, so none is needed.
+- Copied theme layouts or a Node.js/Tailwind build. Blowfish ships compiled CSS, and additions stay in small project files that use the theme's extension points (see Decision 9).
 - Automated tests or a CI pipeline beyond Cloudflare's build. Verification is by build checks and inspecting the output.
 - Migrating to Workers. See Decision 5.
 - Running the container for production builds. See Decision 8.
@@ -67,6 +67,11 @@ Blowfish expects site configuration split across `config/_default/`. Copy its fi
 | Taxonomy pages | None | Tags and author pages aren't needed for the first version. |
 | Main menu | Über uns, Aktuelles, Kontakt | Required navigation. |
 | Footer menu | Impressum, Datenschutz | Required legal links. `footer.showMenu` is already on by default. |
+| Language `title` | `Für ein lebenswertes Lichtenberg` | The site name. |
+| `list.showHero` and `list.heroStyle` | `true` and `big` | Shows the Aktuelles image. This is a site-wide setting, and Aktuelles is currently the only list page. |
+| `list.showSummary` and `summaryLength` | `true` and `30` | Shows news previews. The theme's default `summaryLength` of 0 leaves them empty. |
+| `homepage.showMoreLink` and `showMoreLinkDest` | `true` and `/aktuelles/` | Links from recent news to the full list. |
+| `header.layout` | `banner` | Adds the site-wide banner. See Decision 9. |
 
 Three small overrides complete the German error page and interface text without changing theme layouts:
 
@@ -138,7 +143,24 @@ Cloudflare's Git integration runs its own build image, so production and preview
 - **Alternative: plain `docker run` commands.** Rejected because the mounts, port and image tag would have to be repeated in every command.
 - **Alternative: build in the container for production too, using GitHub Actions and Direct Upload.** Rejected because it adds a CI pipeline and replaces the Git integration, for little benefit on a site this simple.
 
+### 9. Add the banner through the theme's header setting
+
+Blowfish chooses its header partial by name from `header.layout`. Set that to `banner` and add `layouts/partials/header/banner.html`, which calls the theme's `header/basic.html` and then renders the banner. Banner styles go in `assets/css/custom.css`, which the theme loads automatically.
+
+- **Alternative: override `baseof.html` or the theme's header.** Rejected because copied layouts must be merged by hand on every theme upgrade.
+- **Alternative: the `hero` homepage layout.** Rejected because it only appears on the Startseite, and the banner is required on every page.
+
+### 10. Store images in the repository
+
+Images live in the repository and are served from the site's own domain, which the no-third-party requirement needs. The Aktuelles image is `content/aktuelles/feature.jpg`, a CC0 sample photo that Hugo resizes for the hero. The banner image is `assets/img/banner.jpg`, a CC BY-SA 4.0 photo of Lichtenberg that Hugo crops to a wide strip. Its license requires visible credit, so the Impressum has a Bildnachweis section, which every page links to from its footer.
+
+- **Alternative: hotlink images from another site.** Rejected because every page view would send visitor data to that site.
+
 ## Risks / Trade-offs
+
+- **The sample photo misrepresents the location** → The Aktuelles photo shows Amsterdam, not Lichtenberg. The page's `PLATZHALTER` line and the README's launch checklist flag it for replacement.
+- **The image credit gets lost** → Replacing the Impressum placeholder could remove the Bildnachweis section that the banner's license requires. The README's launch checklist covers this.
+- **Published claims create legal exposure** → Statements about a named project or developer can carry legal risk, such as defamation. Sample content invents no names or facts, and the Verein should have real claims checked before publishing them.
 
 - **Local and hosted builds differ beyond the Hugo version** → The container runs on Alpine and Cloudflare on Ubuntu. Preview deployments show the Cloudflare result before anything reaches `main`.
 - **File changes don't trigger live reload through the mount** → Add `--poll 700ms` to the server command if the check in the tasks fails.

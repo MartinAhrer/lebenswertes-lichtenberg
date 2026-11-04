@@ -6,6 +6,35 @@ Defines what visitors experience on the Verein's public website: its pages, navi
 
 ## ADDED Requirements
 
+### Requirement: Site name
+Every page SHALL show the site name "Für ein lebenswertes Lichtenberg" in its header and browser title.
+
+#### Scenario: Identifying the site
+- **WHEN** a visitor opens any page of the site
+- **THEN** the page header shows "Für ein lebenswertes Lichtenberg"
+- **AND** the browser title contains "Für ein lebenswertes Lichtenberg"
+
+### Requirement: Site-wide banner
+Every page SHALL show an image banner containing the site name directly under the main navigation.
+
+#### Scenario: Banner on any page
+- **WHEN** a visitor opens any page of the site, including the error page
+- **THEN** an image banner with the site name appears directly under the main navigation
+
+#### Scenario: Banner on a phone
+- **GIVEN** a browser viewport 375 pixels wide
+- **WHEN** a visitor opens any page
+- **THEN** the site name in the banner is fully visible and readable
+- **AND** the banner causes no horizontal page scrolling
+
+### Requirement: Campaign information on the Startseite
+The Startseite SHALL inform citizens about the real estate project the Verein wants to block, with a headline and sections on what is at issue, what the Verein demands and how citizens can help.
+
+#### Scenario: Learning about the campaign
+- **WHEN** a visitor opens the Startseite
+- **THEN** the page shows the campaign headline and the three sections
+- **AND** the section on helping links to Kontakt and Aktuelles
+
 ### Requirement: Initial page set
 The site SHALL provide these pages: Startseite at `/`, Über uns at `/ueber-uns/`, Aktuelles at `/aktuelles/`, Kontakt at `/kontakt/`, Impressum at `/impressum/` and Datenschutz at `/datenschutz/`.
 
@@ -30,12 +59,30 @@ Every page SHALL show links to Impressum and Datenschutz in its footer.
 - **THEN** links to Impressum and Datenschutz are present and open those pages
 
 ### Requirement: Recent news on the Startseite
-The Startseite SHALL show the Verein's introductory text followed by a list of the most recent news posts, each linking to its post.
+The Startseite SHALL show the Verein's introductory text followed by a list of the most recent news posts, each linking to its post, and a link to the full Aktuelles page.
 
 #### Scenario: News posts exist
 - **GIVEN** at least one published news post
 - **WHEN** a visitor opens the Startseite
 - **THEN** the recent posts are listed and link to their pages
+- **AND** a link leads to the Aktuelles page
+
+### Requirement: Image on the Aktuelles page
+The Aktuelles page SHALL show a large image with alternative text above its title.
+
+#### Scenario: Viewing the Aktuelles page
+- **WHEN** a visitor opens the Aktuelles page at phone or desktop width
+- **THEN** the image appears above the page title
+- **AND** the image has alternative text
+- **AND** the image causes no horizontal page scrolling
+
+### Requirement: News previews
+The Aktuelles page SHALL show a short text preview of each listed news post.
+
+#### Scenario: Scanning the news list
+- **GIVEN** published news posts with body text
+- **WHEN** a visitor opens the Aktuelles page
+- **THEN** each listed post shows a preview of its text
 
 ### Requirement: German language
 The site SHALL be published in German, covering page content, theme interface text and dates, and SHALL declare German as the page language.
@@ -67,13 +114,13 @@ All pages SHALL be readable and navigable at phone and desktop widths without ho
 - **AND** every main navigation link can be reached
 
 ### Requirement: No third-party resources or tracking
-Pages SHALL load scripts, styles and fonts only from the site's own origin, and SHALL contain no analytics, advertising or tracking code, so that no consent banner is needed for them.
+Pages SHALL load scripts, styles, fonts and images only from the site's own origin, and SHALL contain no analytics, advertising or tracking code, so that no consent banner is needed for them.
 
 #### Scenario: Inspecting the generated site
-- **WHEN** the generated HTML is searched for script, stylesheet and font references
+- **WHEN** the generated HTML is searched for script, stylesheet, font and image references
 - **THEN** every reference points to the site's own origin
 - **AND** no analytics, advertising or tracking code is present
 
 #### Scenario: Loading a page in a browser
 - **WHEN** a visitor loads a page of the deployed site with browser developer tools open
-- **THEN** no script, stylesheet or font is requested from another domain
+- **THEN** no script, stylesheet, font or image is requested from another domain

@@ -2,7 +2,7 @@ disabled = false
 locale = "de"
 label = "Deutsch"
 weight = 1
-title = "LB Verein"
+title = "Für ein lebenswertes Lichtenberg"
 
 [params]
   displayName = "DE"

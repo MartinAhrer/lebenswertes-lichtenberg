@@ -1,4 +1,4 @@
-# LB Verein website
+# Für ein lebenswertes Lichtenberg
 
 The Verein's public website, built with [Hugo](https://gohugo.io/) and the [Blowfish](https://blowfish.page/) theme. Content is written in Markdown and hosted on Cloudflare Pages.
 
@@ -121,6 +121,7 @@ Change all of these together:
 
 - [ ] `grep -r PLATZHALTER content/` finds nothing.
 - [ ] Impressum and Datenschutz contain reviewed text, and Datenschutz names Cloudflare as the host.
-- [ ] The site title in `config/_default/languages.de.toml` is the Verein's real name. It's currently derived from the repository name.
 - [ ] `baseURL` matches the live address.
-- [ ] Remove the example post, `content/aktuelles/erste-neuigkeit.md`.
+- [ ] The sample posts in `content/aktuelles/` are removed or replaced.
+- [ ] The Bildnachweis section in `content/impressum.md` is kept when the legal text is added, and matches the images in use. The banner photo's CC BY-SA 4.0 license requires this credit.
+- [ ] The sample photo, `content/aktuelles/feature.jpg`, is replaced with a local image. To replace it, overwrite that file. The current photo shows Amsterdam, by Fons Heijnsbroek, [CC0 on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2006.10_-_%27Building_to_the_sky%27_-_Amsterdam_photos_and_pictures,_construction-site_in_light_of_late_afternoon_sky_in_Fall_above_the_city_with_cranes_at_the_Oosterdok;_Dutch_city_%2B_geotag,_Fons_Heijnsbroek,_The_Netherlands_(27369893630).jpg).

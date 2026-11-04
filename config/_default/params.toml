@@ -54,7 +54,7 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
 # metaDescriptionOrder = ["summary", "description", "site"] # Controls the fallback order for the HTML meta description. Valid values are "summary", "description", and "site".
 
 [header]
-  layout = "basic" # valid options: basic, fixed, fixed-fill, fixed-gradient, fixed-fill-blur, floating
+  layout = "banner" # custom, see layouts/partials/header/banner.html; valid options: banner, basic, fixed, fixed-fill, fixed-gradient, fixed-fill-blur, floating
   # mobileMenuStyle = "fullscreen" # valid options: fullscreen, dropdown
 
 [footer]
@@ -70,8 +70,8 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
   #homepageImage = "IMAGE.jpg" # used in: hero, and card
   showRecent = true
   showRecentItems = 5
-  showMoreLink = false
-  showMoreLinkDest = "/posts/"
+  showMoreLink = true
+  showMoreLinkDest = "/aktuelles/"
   cardView = false
   cardViewScreenWidth = false
   layoutBackgroundBlur = false # only used when layout equals background
@@ -115,14 +115,14 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
   # externalLinkForceNewTab = false # disable to allow external links in the same tab (defaults to true)
 
 [list]
-  showHero = false
+  showHero = true
   # featureImageHover = false # subtle zoom on card thumbnails on hover
-  # heroStyle = "background" # valid options: basic, big, background, thumbAndBackground
+  heroStyle = "big" # valid options: basic, big, background, thumbAndBackground
   layoutBackgroundBlur = true # only used when heroStyle equals background or thumbAndBackground
   # layoutBackgroundBlurStyle = "fade" # valid options: fade, classic. Only used when heroStyle equals background
   layoutBackgroundHeaderSpace = true # only used when heroStyle equals background
   showBreadcrumbs = false
-  showSummary = false
+  showSummary = true
   showViews = false
   showLikes = false
   showTableOfContents = false

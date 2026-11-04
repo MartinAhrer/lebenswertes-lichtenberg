@@ -19,7 +19,7 @@ Tasks marked **(account access)** need the repository owner's GitHub or Cloudfla
 
 - [x] 3.1 Create `content/_index.md`, `content/ueber-uns.md` and `content/kontakt.md` in German with `PLATZHALTER` markers for unknown Verein details, and verify each renders at its required URL
 - [x] 3.2 Create `content/impressum.md` and `content/datenschutz.md` with `PLATZHALTER` markers and no invented legal wording, name Cloudflare as the host in the Datenschutz placeholder, and verify each renders at its required URL
-- [x] 3.3 Create `content/aktuelles/_index.md` and one past-dated example post marked `PLATZHALTER`, and verify the post appears on `/aktuelles/` and the Startseite with a German-formatted date
+- [x] 3.3 Create `content/aktuelles/_index.md` and past-dated sample posts marked `PLATZHALTER`, and verify the post appears on `/aktuelles/` and the Startseite with a German-formatted date
 - [x] 3.4 Verify `grep -r PLATZHALTER content/` finds every placeholder and that the marker is visible on the rendered pages
 
 ## 4. Build script and documentation
@@ -52,7 +52,17 @@ Tasks marked **(account access)** need the repository owner's GitHub or Cloudfla
 - [ ] 7.5 Push a commit that breaks the build to the temporary branch, verify the deployment is reported as failed and production is unchanged, then delete the branch
 - [ ] 7.6 Push a small content change to `main` and verify production updates without manual steps
 
+## 8. Campaign content and appearance
+
+- [x] 8.1 Set the site name and verify it in the header and browser title
+- [x] 8.2 Add campaign sample content and three sample posts, and verify each contains `PLATZHALTER`
+- [x] 8.3 Add the Aktuelles image and verify it at 375 pixels and desktop width
+- [x] 8.4 Enable news previews and the link to Aktuelles, and verify them on the built pages
+- [x] 8.5 Add the site-wide banner and verify it on every page, including the error page, at both widths
+- [x] 8.6 Verify the built site loads images only from its own domain, with the banner in place
+
 ## Workflow follow-up
 
-- Replace all `PLATZHALTER` content with real text from the Verein, including reviewed Impressum and Datenschutz text, before announcing the site.
+- Replace all `PLATZHALTER` content and sample images with real content from the Verein, including reviewed Impressum and Datenschutz text, before announcing the site.
+- Have factual claims about the project or developer checked for legal risk before publishing them.
 - Archive this change after the implementation is reviewed.

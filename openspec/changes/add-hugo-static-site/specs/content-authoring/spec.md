@@ -51,13 +51,24 @@ Content marked as a draft, or dated in the future, SHALL be left out of producti
 - **THEN** the draft page is shown in the local preview
 
 ### Requirement: Placeholder content is identifiable
-Any text standing in for information the Verein has not yet supplied SHALL contain the marker `PLATZHALTER`, both in the Markdown source and on the rendered page.
+Every page or post with sample text, a sample image or other stand-in content SHALL show the marker `PLATZHALTER`, both in its Markdown source and on the rendered page.
 
 #### Scenario: Finding remaining placeholders
 - **WHEN** a maintainer searches the content files for `PLATZHALTER`
-- **THEN** every location still awaiting real content is found
+- **THEN** every page or post still awaiting real content is found
 
 #### Scenario: Placeholder seen on a page
-- **GIVEN** a page that still contains placeholder text
+- **GIVEN** a page that still contains stand-in content
 - **WHEN** a reader views the page
 - **THEN** the marker `PLATZHALTER` is visible in the text
+
+#### Scenario: Sample post with a realistic title
+- **GIVEN** a sample post with a realistic title describing an event that has not happened
+- **WHEN** a maintainer searches the content files for `PLATZHALTER`
+- **THEN** the post is found through the marker in its body
+- **AND** the marker is visible on the post's page
+
+#### Scenario: Sample image
+- **GIVEN** a page that shows a sample image
+- **WHEN** a reader views the page
+- **THEN** the page's visible marker states that the image is a sample
