@@ -1,0 +1,16 @@
+services:
+  hugo:
+    image: ghcr.io/gohugoio/hugo:v0.167.0
+    command: build
+    volumes:
+      - .:/project
+      - hugo-cache:/cache
+  server:
+    extends:
+      service: hugo
+    command: server -D --renderToMemory --bind 0.0.0.0 --baseURL http://localhost:1313/
+    ports:
+      - "1313:1313"
+
+volumes:
+  hugo-cache:

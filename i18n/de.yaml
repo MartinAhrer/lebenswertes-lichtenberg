@@ -1,0 +1,9 @@
+# Strings missing from the Blowfish v3.9.0 German translation.
+error:
+  404_home: "Zur Startseite"
+
+nav:
+  main_menu: "Hauptmenü"
+  close_menu: "Menü schließen"
+  mobile_menu: "Mobiles Menü"
+  footer_menu: "Fußzeilenmenü"

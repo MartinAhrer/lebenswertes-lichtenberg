@@ -68,6 +68,12 @@ Blowfish expects site configuration split across `config/_default/`. Copy its fi
 | Main menu | Über uns, Aktuelles, Kontakt | Required navigation. |
 | Footer menu | Impressum, Datenschutz | Required legal links. `footer.showMenu` is already on by default. |
 
+Three small overrides complete the German error page and interface text without changing theme layouts:
+
+- `i18n/de.yaml` adds strings missing from the theme's German translation, including the error page button and menu labels.
+- `data/quotes404.json` is an empty list, so the theme doesn't replace the error page's explanation with a random film quote. Hugo prints a harmless warning about this override on every build.
+- A `cascade` entry in `hugo.toml`, targeting the path `/404`, replaces Hugo's built-in English error page title.
+
 ### 4. Use German URL slugs and a simple content layout
 
 Use ASCII slugs, so `content/ueber-uns.md` serves "Über uns" at `/ueber-uns/`. News posts live at `content/aktuelles/<slug>.md`, and the section's list page comes from `content/aktuelles/_index.md`. The Startseite comes from `content/_index.md`.
@@ -113,14 +119,17 @@ All local Hugo work runs in the official image, and `compose.yaml` keeps the com
 services:
   hugo:
     image: ghcr.io/gohugoio/hugo:v0.167.0
+    command: build # the image's default command only prints help
     volumes: [".:/project", "hugo-cache:/cache"]
   server:
     extends: { service: hugo }
-    command: server -D --bind 0.0.0.0 --baseURL http://localhost:1313/
+    command: server -D --renderToMemory --bind 0.0.0.0 --baseURL http://localhost:1313/
     ports: ["1313:1313"]
 volumes:
   hugo-cache:
 ```
+
+`--renderToMemory` keeps the preview out of `public/`. Without it, the server writes draft pages there and fails on later rebuilds if `public/` is deleted while it runs.
 
 The build command is `docker compose run --rm hugo --gc --minify`, and the preview command is `docker compose up server`, which serves `http://localhost:1313/`.
 

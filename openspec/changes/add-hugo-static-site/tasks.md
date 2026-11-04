@@ -4,38 +4,38 @@ Tasks marked **(account access)** need the repository owner's GitHub or Cloudfla
 
 ## 1. Tooling and repository setup
 
-- [ ] 1.1 Add `compose.yaml` as described in `design.md` Decision 8 and verify `docker compose run --rm hugo version` shows `v0.167.0` and `+extended`
-- [ ] 1.2 Add `.gitignore` entries for `public/`, `resources/_gen/` and `.hugo_build.lock` and verify `git check-ignore` matches each path
-- [ ] 1.3 Add Blowfish as a Git submodule at `themes/blowfish`, check out tag `v3.9.0`, and verify `git submodule status` shows that tag
+- [x] 1.1 Add `compose.yaml` as described in `design.md` Decision 8 and verify `docker compose run --rm hugo version` shows `v0.167.0` and `+extended`
+- [x] 1.2 Add `.gitignore` entries for `public/`, `resources/_gen/` and `.hugo_build.lock` and verify `git check-ignore` matches each path
+- [x] 1.3 Add Blowfish as a Git submodule at `themes/blowfish`, check out tag `v3.9.0`, and verify `git submodule status` shows that tag
 
 ## 2. Site configuration
 
-- [ ] 2.1 Copy the theme's `config/_default/` files into the project, rename the language and menu files to `languages.de.toml` and `menus.de.toml`, and verify `docker compose run --rm hugo config` succeeds
-- [ ] 2.2 Set `theme`, `baseURL` and `defaultContentLanguage = "de"`, and set the German `locale`, title and `dateFormat`, then verify `docker compose run --rm hugo config` reports these values
-- [ ] 2.3 Set the `page` homepage layout, recent news, `mainSections = ["aktuelles"]` and `enableSearch = false`, remove the taxonomies, and verify `docker compose run --rm hugo` builds with no theme compatibility warning
-- [ ] 2.4 Configure the main menu (Über uns, Aktuelles, Kontakt) and footer menu (Impressum, Datenschutz), and verify after task 3 that the built pages contain all five links
+- [x] 2.1 Copy the theme's `config/_default/` files into the project, rename the language and menu files to `languages.de.toml` and `menus.de.toml`, and verify `docker compose run --rm hugo config` succeeds
+- [x] 2.2 Set `theme`, `baseURL` and `defaultContentLanguage = "de"`, and set the German `locale`, title and `dateFormat`, then verify `docker compose run --rm hugo config` reports these values
+- [x] 2.3 Set the `page` homepage layout, recent news, `mainSections = ["aktuelles"]` and `enableSearch = false`, remove the taxonomies, and verify `docker compose run --rm hugo` builds with no theme compatibility warning
+- [x] 2.4 Configure the main menu (Über uns, Aktuelles, Kontakt) and footer menu (Impressum, Datenschutz), and verify after task 3 that the built pages contain all five links
 
 ## 3. Content
 
-- [ ] 3.1 Create `content/_index.md`, `content/ueber-uns.md` and `content/kontakt.md` in German with `PLATZHALTER` markers for unknown Verein details, and verify each renders at its required URL
-- [ ] 3.2 Create `content/impressum.md` and `content/datenschutz.md` with `PLATZHALTER` markers and no invented legal wording, name Cloudflare as the host in the Datenschutz placeholder, and verify each renders at its required URL
-- [ ] 3.3 Create `content/aktuelles/_index.md` and one past-dated example post marked `PLATZHALTER`, and verify the post appears on `/aktuelles/` and the Startseite with a German-formatted date
-- [ ] 3.4 Verify `grep -r PLATZHALTER content/` finds every placeholder and that the marker is visible on the rendered pages
+- [x] 3.1 Create `content/_index.md`, `content/ueber-uns.md` and `content/kontakt.md` in German with `PLATZHALTER` markers for unknown Verein details, and verify each renders at its required URL
+- [x] 3.2 Create `content/impressum.md` and `content/datenschutz.md` with `PLATZHALTER` markers and no invented legal wording, name Cloudflare as the host in the Datenschutz placeholder, and verify each renders at its required URL
+- [x] 3.3 Create `content/aktuelles/_index.md` and one past-dated example post marked `PLATZHALTER`, and verify the post appears on `/aktuelles/` and the Startseite with a German-formatted date
+- [x] 3.4 Verify `grep -r PLATZHALTER content/` finds every placeholder and that the marker is visible on the rendered pages
 
 ## 4. Build script and documentation
 
-- [ ] 4.1 Add `scripts/cloudflare-build.sh` to print `hugo version`, stop on any error, and choose the base URL from `CF_PAGES_BRANCH` and `CF_PAGES_URL`; verify by running it in the container (`docker compose run --rm --entrypoint sh` with `-e` for the variables) with `CF_PAGES_BRANCH=main`, then with a preview branch and example URL, and inspecting `sitemap.xml` each time
-- [ ] 4.2 Write `README.md` covering cloning with `--recurse-submodules`, the Docker requirement, building with `docker compose run --rm hugo --gc --minify`, local preview with `docker compose up server`, adding pages and news posts, the Cloudflare settings and why `HUGO_VERSION` must match the image tag, upgrading Hugo and the theme together, and a launch checklist; verify the documented commands run as written
+- [x] 4.1 Add `scripts/cloudflare-build.sh` to print `hugo version`, stop on any error, and choose the base URL from `CF_PAGES_BRANCH` and `CF_PAGES_URL`; verify by running it in the container (`docker compose run --rm --entrypoint sh` with `-e` for the variables) with `CF_PAGES_BRANCH=main`, then with a preview branch and example URL, and inspecting `sitemap.xml` each time
+- [x] 4.2 Write `README.md` covering cloning with `--recurse-submodules`, the Docker requirement, building with `docker compose run --rm hugo --gc --minify`, local preview with `docker compose up server`, adding pages and news posts, the Cloudflare settings and why `HUGO_VERSION` must match the image tag, upgrading Hugo and the theme together, and a launch checklist; verify the documented commands run as written
 
 ## 5. Local integration checks
 
-- [ ] 5.1 Build from a fresh clone with submodules following the README, using only Docker, and verify the build succeeds with no version compatibility warning and `git status` shows no generated files
-- [ ] 5.2 Add a temporary draft and a temporary future-dated post, verify neither appears in the output of `docker compose run --rm hugo` and that the draft appears under `docker compose up server`, then remove both files
-- [ ] 5.3 Inspect `public/` and verify every generated HTML page has `lang="de"`, the main navigation and the legal footer links, including `404.html`
-- [ ] 5.4 Add a second, newer temporary post, verify `/aktuelles/` lists it first, then remove it
-- [ ] 5.5 Search `public/` for script, stylesheet and font references and verify all use the site's own origin and that no analytics, advertising or tracking code is present
-- [ ] 5.6 Open the pages in a browser at 375 pixels and at desktop width, and verify there is no horizontal page scrolling and that all navigation links work and German theme text appears
-- [ ] 5.7 Edit a Markdown file while `docker compose up server` is running and verify the browser at `http://localhost:1313/` updates; if it doesn't, add `--poll 700ms` as described in `design.md` and check again
+- [x] 5.1 Build from a fresh clone with submodules following the README, using only Docker, and verify the build succeeds with no version compatibility warning and `git status` shows no generated files
+- [x] 5.2 Add a temporary draft and a temporary future-dated post, verify neither appears in the output of `docker compose run --rm hugo` and that the draft appears under `docker compose up server`, then remove both files
+- [x] 5.3 Inspect `public/` and verify every generated HTML page has `lang="de"`, the main navigation and the legal footer links, including `404.html`
+- [x] 5.4 Add a second, newer temporary post, verify `/aktuelles/` lists it first, then remove it
+- [x] 5.5 Search `public/` for script, stylesheet and font references and verify all use the site's own origin and that no analytics, advertising or tracking code is present
+- [x] 5.6 Open the pages in a browser at 375 pixels and at desktop width, and verify there is no horizontal page scrolling and that all navigation links work and German theme text appears
+- [x] 5.7 Edit a Markdown file while `docker compose up server` is running and verify the browser at `http://localhost:1313/` updates; if it doesn't, add `--poll 700ms` as described in `design.md` and check again
 
 ## 6. Hosting setup
 
