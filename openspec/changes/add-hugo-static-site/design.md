@@ -1,0 +1,161 @@
+# Design
+
+## Context
+
+The repository contains only IDE metadata and OpenSpec files, with no commits and no git remote. Hugo, Go and the GitHub CLI are not installed on the development machine, while Docker 29.2.1 and Compose v5.1.0 are. See `proposal.md` for motivation and scope, and the specs for required behaviour.
+
+Facts checked on 2026-11-04 that shape this design:
+
+| Item | Finding |
+| --- | --- |
+| Blowfish | Latest release is v3.9.0. It declares Hugo Extended 0.164.0 to 0.167.0 and ships a German translation (`i18n/de.yaml`). |
+| Hugo | Latest release and Homebrew are both 0.169.0, which is above the Blowfish maximum. |
+| Hugo image | The official `ghcr.io/gohugoio/hugo:v0.167.0` image is the Extended edition, supports amd64 and arm64, and works from `/project`. |
+| Cloudflare Pages | The v3 build image defaults to Hugo 0.147.7, which is below the Blowfish minimum. `HUGO_VERSION` selects any other version. |
+| Cloudflare guidance | The Pages documentation now recommends Workers for new projects. Pages remains available and supported. |
+
+## Goals / Non-Goals
+
+**Goals:**
+
+- Keep the site maintainable with only Docker, a text editor and Git.
+- Stay close to Blowfish defaults so theme upgrades remain simple.
+- Make local and hosted builds use the same versions.
+
+**Non-Goals:**
+
+- Custom layouts, CSS or a Node.js/Tailwind build. Blowfish ships compiled CSS, so none is needed.
+- Automated tests or a CI pipeline beyond Cloudflare's build. Verification is by build checks and inspecting the output.
+- Migrating to Workers. See Decision 5.
+- Running the container for production builds. See Decision 8.
+
+## Decisions
+
+### 1. Pin Hugo Extended 0.167.0
+
+Use the newest version inside the Blowfish range. Blowfish requires the Extended edition.
+
+- **Alternative: a native Hugo install.** Rejected because Homebrew's 0.169.0 is outside the range the theme declares, and a pinned install would need admin rights and differ per machine.
+- **Alternative: the latest version with no pin.** Rejected because local and hosted builds would drift apart.
+
+Locally, the image tag in `compose.yaml` sets the version (see Decision 8). On Cloudflare, set `HUGO_VERSION=0.167.0`. Upgrades change the theme tag, the image tag, `HUGO_VERSION` and the README together.
+
+### 2. Add Blowfish as a Git submodule at tag v3.9.0
+
+The theme lives at `themes/blowfish`, pinned to the release tag.
+
+- **Alternative: Hugo Modules.** Rejected because a submodule works the same in the container and on Cloudflare, with no module tooling or module cache to manage.
+- **Alternative: copy the theme into the repository.** Rejected because it adds a large amount of vendored code and makes upgrades harder.
+
+The cost is that contributors must clone with `--recurse-submodules`, which the README documents.
+
+### 3. Copy the theme's configuration into `config/_default/` and adapt it
+
+Blowfish expects site configuration split across `config/_default/`. Copy its files, then rename `languages.en.toml` and `menus.en.toml` to their `.de.toml` equivalents.
+
+| Setting | Value | Reason |
+| --- | --- | --- |
+| `theme` | `blowfish` | Enables the theme. |
+| `baseURL` | `https://lb-verein-website.pages.dev/` | Production URL. See Open Questions. |
+| `defaultContentLanguage` | `de` | German-only site. |
+| Language `locale` | `de` | Sets the page language and selects the German translation. |
+| Language `dateFormat` | `2. January 2006` | German date format. |
+| `homepage.layout` | `page` | Shows the Verein's intro text instead of a personal profile. |
+| `homepage.showRecent` | `true` | Lists recent news on the Startseite. |
+| `mainSections` | `["aktuelles"]` | Sets the source for recent news. |
+| `enableSearch` | `false` | Search is out of scope. |
+| Taxonomy pages | None | Tags and author pages aren't needed for the first version. |
+| Main menu | Über uns, Aktuelles, Kontakt | Required navigation. |
+| Footer menu | Impressum, Datenschutz | Required legal links. `footer.showMenu` is already on by default. |
+
+### 4. Use German URL slugs and a simple content layout
+
+Use ASCII slugs, so `content/ueber-uns.md` serves "Über uns" at `/ueber-uns/`. News posts live at `content/aktuelles/<slug>.md`, and the section's list page comes from `content/aktuelles/_index.md`. The Startseite comes from `content/_index.md`.
+
+Drafts and future-dated content rely on Hugo's defaults (`buildDrafts = false`, `buildFuture = false`), and the local preview (`docker compose up server`, see Decision 8) shows drafts. A future-dated post goes live only on the next build after its date, because there are no scheduled rebuilds.
+
+### 5. Host on Cloudflare Pages with Git integration
+
+Cloudflare builds on every push, which gives the required production and preview behaviour without any CI code.
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `main` |
+| Build command | `sh scripts/cloudflare-build.sh` |
+| Output directory | `public` |
+| Environment variable | `HUGO_VERSION=0.167.0` for production and preview |
+| Web Analytics | Off, as required by the no-tracking requirement |
+
+- **Alternative: Direct Upload.** Rejected because it would need a separate CI pipeline to build and upload.
+- **Alternative: Cloudflare Workers static assets.** Cloudflare now recommends this for new projects. Pages was explicitly requested and meets every requirement, and a static site in `public/` can move later with little work.
+
+### 6. Select the base URL in a small build script
+
+`scripts/cloudflare-build.sh` prints `hugo version` for the build log, then runs:
+
+- `hugo --gc --minify` when `CF_PAGES_BRANCH` is `main`, using the configured production URL.
+- `hugo --gc --minify --baseURL "$CF_PAGES_URL"` otherwise, so preview links stay on the preview.
+
+The script exits on any error, so a failed build isn't deployed.
+
+- **Alternative: always pass `CF_PAGES_URL`, as Cloudflare's Hugo guide suggests.** Rejected because that variable holds the URL of the current deployment, so production canonical links and the sitemap could point to a per-deployment address.
+- **Alternative: no override.** Rejected because preview pages would link and load assets from production.
+
+### 7. Mark placeholder content with `PLATZHALTER`
+
+Unknown Verein details appear as visible text containing `PLATZHALTER`. The README's launch checklist includes searching for it. No names, addresses or legal wording are invented.
+
+### 8. Run Hugo locally through Docker Compose
+
+All local Hugo work runs in the official image, and `compose.yaml` keeps the commands short and the version pin in the repository:
+
+```yaml
+services:
+  hugo:
+    image: ghcr.io/gohugoio/hugo:v0.167.0
+    volumes: [".:/project", "hugo-cache:/cache"]
+  server:
+    extends: { service: hugo }
+    command: server -D --bind 0.0.0.0 --baseURL http://localhost:1313/
+    ports: ["1313:1313"]
+volumes:
+  hugo-cache:
+```
+
+The build command is `docker compose run --rm hugo --gc --minify`, and the preview command is `docker compose up server`, which serves `http://localhost:1313/`.
+
+Cloudflare's Git integration runs its own build image, so production and preview deployments keep using `HUGO_VERSION` (Decision 5). Both environments use the same Hugo version, but not the same image.
+
+- **Alternative: plain `docker run` commands.** Rejected because the mounts, port and image tag would have to be repeated in every command.
+- **Alternative: build in the container for production too, using GitHub Actions and Direct Upload.** Rejected because it adds a CI pipeline and replaces the Git integration, for little benefit on a site this simple.
+
+## Risks / Trade-offs
+
+- **Local and hosted builds differ beyond the Hugo version** → The container runs on Alpine and Cloudflare on Ubuntu. Preview deployments show the Cloudflare result before anything reaches `main`.
+- **File changes don't trigger live reload through the mount** → Add `--poll 700ms` to the server command if the check in the tasks fails.
+- **The container's user can't write to the project on Linux** → The image runs as user `hugo`. Set `user:` in `compose.yaml` if a Linux contributor hits this.
+- **Every editor who builds locally needs Docker** → Editors without Docker can still edit Markdown and review the result on a preview deployment.
+
+- **Placeholder Impressum or Datenschutz goes public** → Git integration publishes every push to `main`, including to a public `pages.dev` address. Complete the legal pages before connecting the Cloudflare project or sharing the URL, and follow the README's launch checklist.
+- **Privacy text misses the host** → Cloudflare processes visitor IP addresses even without analytics. The Datenschutz placeholder must name Cloudflare as the host, and whoever supplies the final text should cover this.
+- **Applicable legal requirements are unknown** → Impressum duties differ between countries. This change leaves the wording to the Verein and doesn't assume a jurisdiction.
+- **Theme features add third-party requests** → Blowfish has optional integrations, such as AdSense and Firebase, that load external resources. Leave them unconfigured, and search the generated HTML for external references before launch.
+- **Hosted Hugo isn't the Extended edition or the pinned version** → The first deployment's build log must show `0.167.0` and `+extended`. Forgetting `HUGO_VERSION` falls back to 0.147.7, which is below the theme's minimum. The README lists this setting.
+- **Submodule isn't fetched on Cloudflare** → Cloudflare's Hugo guide uses a submodule theme, so this should work. The first deployment confirms it.
+- **Blowfish falls behind Hugo** → The pin holds Hugo at 0.167.0 until the theme's range moves. This is acceptable for a site with no server-side exposure.
+
+## Migration Plan
+
+This is a new site, so nothing needs to be migrated.
+
+1. Implement and verify the site locally.
+2. Create the GitHub repository and push.
+3. Create and configure the Cloudflare Pages project.
+4. Verify the production and preview deployments.
+
+**Rollback:** use Cloudflare's dashboard to roll back to an earlier deployment, or revert the commit on `main`.
+
+## Open Questions
+
+- **Production domain:** `baseURL` assumes the Cloudflare project is named `lb-verein-website`. If that name is taken or a custom domain is chosen later, only `baseURL` changes.
+- **Colour scheme:** this change starts with Blowfish's default `colorScheme`. Switching later is a one-line change.
