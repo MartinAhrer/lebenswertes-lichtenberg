@@ -6,3 +6,7 @@ resources/_gen/
 # IDE files
 .idea/
 *.iml
+
+# Content map PDF and its renderer's dependencies
+build/
+scripts/inhaltskarte-pdf/node_modules/

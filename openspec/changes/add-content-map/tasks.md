@@ -19,6 +19,7 @@
 - [x] 3.1 Write `docs/inhaltskarte/README.md` in German, as in `design.md` Decision 4. Include an introduction, one section per sketch with its image and block table, the automatic blocks marked, the image section on rights, credit, formats and alternative text, and a note on how the phone layout differs. Verify every ID from task 1.1 has exactly one table row and every row states purpose, limit and source
 - [x] 3.2 Link the map from the README's "Editing content" section and verify the link opens the map on GitHub-style Markdown rendering
 - [x] 3.3 Add a `rules.tasks` entry to `openspec/config.yaml` requiring a task to update `docs/inhaltskarte/` when a change adds, removes, renames or moves a block, and verify `openspec instructions tasks --change add-content-map --json` shows the rule
+- [x] 3.4 Add `scripts/inhaltskarte-pdf.sh` as in `design.md` Decision 9, document it in the README, and verify it writes `build/Inhaltskarte.pdf` with every sketch and table legible and each sketch section starting on a new page
 
 ## 4. Integration checks
 

@@ -11,6 +11,7 @@ The site is built and the pages exist, but they are still filled with lorem ipsu
 - For every block, give a stable name and ID, its purpose, length or image limits, and the file and front-matter field or Markdown element that fills it.
 - Mark blocks that the site fills automatically, such as the recent posts, reading time and footer line, so authors know they don't need to supply them.
 - Stop showing a date, reading time and previous/next links on text pages such as Über uns and Kontakt. These pages have no date, so the theme showed "1. Januar 0001" and linked them to each other like news posts. Found while taking the block inventory.
+- Add a script that turns the map into a PDF for sending to authors.
 - Link the map from the README's editing section, and make updating the map part of every change that adds, removes or moves a block.
 
 **Assumptions to confirm during review** (not explicitly requested):

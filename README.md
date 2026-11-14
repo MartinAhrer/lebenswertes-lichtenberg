@@ -49,6 +49,12 @@ The Startseite's headline, intro text and buttons are in the front matter of `co
 
 The [content map (Inhaltskarte)](docs/inhaltskarte/README.md) names every building block of the site, in German, with a sketch of each page type, recommended lengths and image sizes, and the file and field each block comes from. Send it to authors when asking for content. When a change adds, removes, renames or moves a block, update the map in the same change.
 
+To send the map as a PDF, run the script below. It needs Node.js and Google Chrome or Chromium, and writes `build/Inhaltskarte.pdf`, which isn't committed. Set `CHROME` to the browser's path if the script doesn't find it.
+
+```sh
+sh scripts/inhaltskarte-pdf.sh
+```
+
 ### Add a page
 
 Create a Markdown file in `content/` with a title. To show it in the header or footer, add it to `config/_default/menus.de.toml`.

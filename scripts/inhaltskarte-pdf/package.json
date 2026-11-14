@@ -1,0 +1,9 @@
+{
+  "name": "inhaltskarte-pdf",
+  "private": true,
+  "description": "Renders docs/inhaltskarte/README.md and its sketches to a PDF. Run scripts/inhaltskarte-pdf.sh.",
+  "type": "module",
+  "dependencies": {
+    "marked": "12.0.2"
+  }
+}

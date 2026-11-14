@@ -120,6 +120,13 @@ The theme reads each setting as `.Params.showDate | default site.Params.article.
 - **Alternative: a site-level `cascade` in `hugo.toml` that lists the text pages.** Rejected because every new text page would have to be added to the list.
 - **Alternative: `showDate: false` in each text page.** Rejected because the theme ignores it, as explained above.
 
+### 9. Generate a PDF of the map with the host's Chrome
+
+`scripts/inhaltskarte-pdf.sh` renders the map's Markdown to HTML with a pinned `marked` (in `scripts/inhaltskarte-pdf/`), adds print styles, and prints it to `build/Inhaltskarte.pdf` with headless Chrome. Each sketch section starts on a new page. Links to files outside the map are shown as text. The PDF is build output and isn't committed.
+
+- **Alternative: run Chrome in a container, like Hugo.** Rejected for now because a third-party Chrome image was not allowed to run in this environment. The script needs Node.js and Chrome on the maintainer's machine instead, which the README states.
+- **Alternative: commit the PDF.** Rejected because it would drift from the Markdown source.
+
 ## Risks / Trade-offs
 
 - **The map drifts from the site** → The OpenSpec rule and the "kept current" requirement put it in every layout change. Review compares the sketches with the local preview.
