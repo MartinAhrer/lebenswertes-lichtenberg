@@ -39,3 +39,10 @@
     font-size: 2.5rem;
   }
 }
+
+/* Long German words in titles, such as "Unterschriftenaktion", would otherwise overflow at phone width */
+h1,
+h2 {
+  hyphens: auto;
+  overflow-wrap: break-word;
+}

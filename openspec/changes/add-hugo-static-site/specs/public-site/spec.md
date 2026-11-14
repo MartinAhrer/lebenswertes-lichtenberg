@@ -15,11 +15,15 @@ Every page SHALL show the site name "Für ein lebenswertes Lichtenberg" in its h
 - **AND** the browser title contains "Für ein lebenswertes Lichtenberg"
 
 ### Requirement: Site-wide banner
-Every page SHALL show an image banner containing the site name directly under the main navigation.
+Every page SHALL show an image banner containing the site name directly under the main navigation. On the Startseite, the banner is the large hero image behind the campaign headline.
 
 #### Scenario: Banner on any page
 - **WHEN** a visitor opens any page of the site, including the error page
 - **THEN** an image banner with the site name appears directly under the main navigation
+
+#### Scenario: Banner on the Startseite
+- **WHEN** a visitor opens the Startseite
+- **THEN** a large image appears behind the site name and campaign headline
 
 #### Scenario: Banner on a phone
 - **GIVEN** a browser viewport 375 pixels wide
@@ -28,11 +32,11 @@ Every page SHALL show an image banner containing the site name directly under th
 - **AND** the banner causes no horizontal page scrolling
 
 ### Requirement: Campaign information on the Startseite
-The Startseite SHALL inform citizens about the real estate project the Verein wants to block, with a headline and sections on what is at issue, what the Verein demands and how citizens can help.
+The Startseite SHALL inform citizens about the real estate project the Verein wants to block, with a headline, buttons leading to the main pages, and sections on what is at issue, what the Verein demands and how citizens can help.
 
 #### Scenario: Learning about the campaign
 - **WHEN** a visitor opens the Startseite
-- **THEN** the page shows the campaign headline and the three sections
+- **THEN** the page shows the campaign headline, buttons and the three sections
 - **AND** the section on helping links to Kontakt and Aktuelles
 
 ### Requirement: Initial page set
@@ -68,11 +72,11 @@ The Startseite SHALL show the Verein's introductory text followed by a list of t
 - **AND** a link leads to the Aktuelles page
 
 ### Requirement: Image on the Aktuelles page
-The Aktuelles page SHALL show a large image with alternative text above its title.
+The Aktuelles page SHALL show a large image with alternative text behind its title.
 
 #### Scenario: Viewing the Aktuelles page
 - **WHEN** a visitor opens the Aktuelles page at phone or desktop width
-- **THEN** the image appears above the page title
+- **THEN** the image appears behind the page title, and the title stays readable
 - **AND** the image has alternative text
 - **AND** the image causes no horizontal page scrolling
 
@@ -83,6 +87,32 @@ The Aktuelles page SHALL show a short text preview of each listed news post.
 - **GIVEN** published news posts with body text
 - **WHEN** a visitor opens the Aktuelles page
 - **THEN** each listed post shows a preview of its text
+
+### Requirement: Appearance of the Blowfish example site
+The site SHALL look like the Blowfish example site wherever the theme provides the feature: the burufugu colour scheme in dark appearance by default with a switcher to light, a floating header, a site-wide background backdrop, a landing Startseite with hero image and buttons, news shown as cards, and page images shown as backgrounds behind the title. Example-site features that load third-party resources or need invented content SHALL be left out.
+
+#### Scenario: First visit
+- **GIVEN** a visitor whose browser has no stored appearance preference and does not ask for light mode
+- **WHEN** the visitor opens any page
+- **THEN** the page uses the burufugu colours in dark appearance
+- **AND** the header floats above the page content
+
+#### Scenario: Switching appearance
+- **WHEN** a visitor selects the appearance switcher
+- **THEN** the page changes to light appearance and stays readable
+
+#### Scenario: Background backdrop
+- **WHEN** a visitor opens any page, including the error page
+- **THEN** the background backdrop appears behind the page content
+
+#### Scenario: News as cards
+- **WHEN** a visitor opens the Startseite or the Aktuelles page
+- **THEN** news posts are shown as cards
+
+#### Scenario: Appearance on a phone
+- **GIVEN** a browser viewport 375 pixels wide
+- **WHEN** a visitor opens any page in dark or light appearance
+- **THEN** the page has no horizontal page scrolling
 
 ### Requirement: German language
 The site SHALL be published in German, covering page content, theme interface text and dates, and SHALL declare German as the page language.

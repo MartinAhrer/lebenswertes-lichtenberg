@@ -12,7 +12,7 @@ Tasks marked **(account access)** need the repository owner's GitHub or Cloudfla
 
 - [x] 2.1 Copy the theme's `config/_default/` files into the project, rename the language and menu files to `languages.de.toml` and `menus.de.toml`, and verify `docker compose run --rm hugo config` succeeds
 - [x] 2.2 Set `theme`, `baseURL` and `defaultContentLanguage = "de"`, and set the German `locale`, title and `dateFormat`, then verify `docker compose run --rm hugo config` reports these values
-- [x] 2.3 Set the `page` homepage layout, recent news, `mainSections = ["aktuelles"]` and `enableSearch = false`, remove the taxonomies, and verify `docker compose run --rm hugo` builds with no theme compatibility warning
+- [x] 2.3 Set the `landing` homepage layout, recent news, `mainSections = ["aktuelles"]` and `enableSearch = false`, remove the taxonomies, and verify `docker compose run --rm hugo` builds with no theme compatibility warning
 - [x] 2.4 Configure the main menu (Über uns, Aktuelles, Kontakt) and footer menu (Impressum, Datenschutz), and verify after task 3 that the built pages contain all five links
 
 ## 3. Content
@@ -60,6 +60,8 @@ Tasks marked **(account access)** need the repository owner's GitHub or Cloudfla
 - [x] 8.4 Enable news previews and the link to Aktuelles, and verify them on the built pages
 - [x] 8.5 Add the site-wide banner and verify it on every page, including the error page, at both widths
 - [x] 8.6 Verify the built site loads images only from its own domain, with the banner in place
+- [x] 8.7 Adopt the look of the Blowfish example site (colours, floating header, landing page and news cards), and verify every page at 375 pixels and desktop width in dark appearance, and the Startseite in light appearance
+- [x] 8.8 Copy the example site's `site-background.svg` into `assets/images/`, enable `backgroundCanvas`, and set `background` hero styles for lists and articles as in `design.md` Decision 3; verify the backdrop on every page including `404.html`, that the Aktuelles title stays readable over its image, and that every page has no horizontal page scrolling at 375 pixels and desktop width in dark and light appearance
 
 ## Workflow follow-up
 

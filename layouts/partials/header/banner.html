@@ -1,9 +1,12 @@
-{{/* The theme's header, followed by the site-wide banner. Selected by header.layout in params.toml. */}}
-{{ partial "header/basic.html" . }}
-{{ with resources.Get "img/banner.jpg" }}
-  {{ $image := .Fill "1600x400 Top" }}
-  <div class="site-banner">
-    <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="" class="nozoom" />
-    <p class="site-banner-title">{{ site.Title }}</p>
-  </div>
+{{/* The theme's floating header, followed by the site-wide banner. Selected by header.layout in params.toml.
+  The Startseite shows the same photo as its large hero, with the site name as the hero caption. */}}
+{{ partial "header/floating.html" . }}
+{{ if not .IsHome }}
+  {{ with resources.Get "img/banner.jpg" }}
+    {{ $image := .Fill "1600x400 Top" }}
+    <div class="site-banner">
+      <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="" class="nozoom" />
+      <p class="site-banner-title">{{ site.Title }}</p>
+    </div>
+  {{ end }}
 {{ end }}

@@ -24,7 +24,7 @@ Facts checked on 2026-11-04 that shape this design:
 
 **Non-Goals:**
 
-- Copied theme layouts or a Node.js/Tailwind build. Blowfish ships compiled CSS, and additions stay in small project files that use the theme's extension points (see Decision 9).
+- Copied theme layouts or a Node.js/Tailwind build. Blowfish ships compiled CSS, and additions stay in small project files that use the theme's extension points. The one exception is a copied hero partial that adds missing alt text (see Decision 9).
 - Automated tests or a CI pipeline beyond Cloudflare's build. Verification is by build checks and inspecting the output.
 - Migrating to Workers. See Decision 5.
 - Running the container for production builds. See Decision 8.
@@ -60,7 +60,8 @@ Blowfish expects site configuration split across `config/_default/`. Copy its fi
 | `defaultContentLanguage` | `de` | German-only site. |
 | Language `locale` | `de` | Sets the page language and selects the German translation. |
 | Language `dateFormat` | `2. January 2006` | German date format. |
-| `homepage.layout` | `page` | Shows the Verein's intro text instead of a personal profile. |
+| `colorScheme` and `defaultAppearance` | `burufugu` and `dark` | Matches the Blowfish example site. Visitors can still switch appearance. |
+| `homepage.layout` | `landing` | Shows a large hero with the campaign headline and buttons, like the Blowfish example site. |
 | `homepage.showRecent` | `true` | Lists recent news on the Startseite. |
 | `mainSections` | `["aktuelles"]` | Sets the source for recent news. |
 | `enableSearch` | `false` | Search is out of scope. |
@@ -68,10 +69,17 @@ Blowfish expects site configuration split across `config/_default/`. Copy its fi
 | Main menu | Über uns, Aktuelles, Kontakt | Required navigation. |
 | Footer menu | Impressum, Datenschutz | Required legal links. `footer.showMenu` is already on by default. |
 | Language `title` | `Für ein lebenswertes Lichtenberg` | The site name. |
-| `list.showHero` and `list.heroStyle` | `true` and `big` | Shows the Aktuelles image. This is a site-wide setting, and Aktuelles is currently the only list page. |
+| `list.showHero` and `list.heroStyle` | `true` and `background` | Shows the Aktuelles image behind its title, like the Blowfish example site. This is a site-wide setting, and Aktuelles is currently the only list page. |
+| `article.showHero` and `article.heroStyle` | `true` and `background` | Shows a post's image behind its title, like the Blowfish example site. Posts without an image show the background backdrop instead. |
+| `backgroundCanvas` and `defaultBackgroundImage` | `true` and `images/site-background.svg` | Shows the example site's fixed backdrop on every page. The SVG is copied from the theme's `exampleSite/assets/images/v3/`, which is MIT-licensed like the theme. |
+| `homepage.layoutBackgroundBlur` | `true` | Matches the Blowfish example site. |
 | `list.showSummary` and `summaryLength` | `true` and `30` | Shows news previews. The theme's default `summaryLength` of 0 leaves them empty. |
 | `homepage.showMoreLink` and `showMoreLinkDest` | `true` and `/aktuelles/` | Links from recent news to the full list. |
-| `header.layout` | `banner` | Adds the site-wide banner. See Decision 9. |
+| `header.layout` | `banner` | Adds the floating header and site-wide banner. See Decision 9. |
+| `header.mobileMenuStyle` | `dropdown` | Matches the Blowfish example site. |
+| `homepage.cardView` and `list.cardView` | `true` | Shows news as cards. |
+| `list.groupByYear` and `article.showWordCount` | `false` | Removes detail that adds little on a small news list. |
+| `article.showReadingProgress` and `highlightCurrentMenuArea` | `true` | Matches the Blowfish example site. |
 
 Three small overrides complete the German error page and interface text without changing theme layouts:
 
@@ -145,10 +153,14 @@ Cloudflare's Git integration runs its own build image, so production and preview
 
 ### 9. Add the banner through the theme's header setting
 
-Blowfish chooses its header partial by name from `header.layout`. Set that to `banner` and add `layouts/partials/header/banner.html`, which calls the theme's `header/basic.html` and then renders the banner. Banner styles go in `assets/css/custom.css`, which the theme loads automatically.
+Blowfish chooses its header partial by name from `header.layout`. Set that to `banner` and add `layouts/partials/header/banner.html`, which calls the theme's `header/floating.html` and then renders the banner strip. The Startseite skips the strip, because the `landing` layout already shows the same photo as a large hero with the site name as its caption. Banner styles go in `assets/css/custom.css`, which the theme loads automatically.
 
 - **Alternative: override `baseof.html` or the theme's header.** Rejected because copied layouts must be merged by hand on every theme upgrade.
-- **Alternative: the `hero` homepage layout.** Rejected because it only appears on the Startseite, and the banner is required on every page.
+- **Alternative: a homepage layout on its own.** Rejected because it only appears on the Startseite, and the banner is required on every page.
+
+One theme partial is copied: `layouts/partials/hero/background.html`. The theme's `background` hero style draws a page's image without alternative text, which the Aktuelles image requirement needs. The copy only adds `alt` (front matter `alt`, else the page title) and must be merged on every theme upgrade. Long German words in titles hyphenate through `custom.css`, so they don't overflow at phone width.
+
+The look follows the Blowfish example site where the theme provides the feature. Its analytics, Firebase, donation widget, sharing buttons and search stay off, as the no-tracking requirement and scope demand. Its number tiles are left out too, because they would need invented figures. View counts, the homepage layout switcher, edit links, taxonomies, related content and Zen mode also stay off, because they don't fit a small campaign site.
 
 ### 10. Store images in the repository
 
@@ -189,4 +201,3 @@ This is a new site, so nothing needs to be migrated.
 ## Open Questions
 
 - **Production domain:** `baseURL` assumes the Cloudflare project is named `lb-verein-website`. If that name is taken or a custom domain is chosen later, only `baseURL` changes.
-- **Colour scheme:** this change starts with Blowfish's default `colorScheme`. Switching later is a one-line change.

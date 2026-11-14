@@ -45,6 +45,8 @@ Pages live in `content/` as Markdown files, and a file's location sets its URL.
 | Impressum | `content/impressum.md` | `/impressum/` |
 | Datenschutz | `content/datenschutz.md` | `/datenschutz/` |
 
+The Startseite's headline, intro text and buttons are in the front matter of `content/_index.md`, and its three cards use the theme's `feature` shortcode.
+
 ### Add a page
 
 Create a Markdown file in `content/` with a title. To show it in the header or footer, add it to `config/_default/menus.de.toml`.
