@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" width="800" height="640" role="img" aria-labelledby="title">
+  <title id="title">Skizze: Gemeinsame Elemente auf jeder Seite</title>
+  <defs>
+    <!-- Roughens the lines so the sketch reads as a draft. Text is not filtered and stays sharp. -->
+    <filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="2.5"/>
+    </filter>
+    <style>
+      text { font-family: "Bradley Hand", "Segoe Print", "Chalkboard SE", "Comic Sans MS", cursive; }
+      .ink, .grey { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: url(#rough); }
+      .ink { stroke: #2b2b2b; }
+      .grey { stroke: #a3a3a3; }
+      .thin { stroke-width: 1.5; }
+      .btn { fill: #ffe8d9; }
+      .sym { font-family: Arial, Helvetica, sans-serif; }
+      .t { fill: #2b2b2b; }
+      .g { fill: #8a8a8a; }
+      .badge rect { fill: #d9480f; }
+      .badge.ref rect { fill: #9a9a9a; }
+      .badge text { fill: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+  <!-- Orange badges mark the blocks of this sketch. Grey badges point to shared blocks drawn in gemeinsam.svg. -->
+  <!-- White paper, so the sketch reads the same in light and dark mode -->
+  <rect width="800" height="640" fill="#fffdf7"/>
+  <rect class="ink" x="20" y="20" width="760" height="600" rx="12"/>
+  <path class="ink thin" d="M20 48 h760"/>
+  <circle class="ink thin" cx="38" cy="34" r="4"/>
+  <circle class="ink thin" cx="54" cy="34" r="4"/>
+  <circle class="ink thin" cx="70" cy="34" r="4"/>
+
+  <!-- Background backdrop behind everything (G5) -->
+  <path class="grey thin" d="M30 330 C 200 260, 420 420, 770 300 M30 420 C 260 360, 480 500, 770 390"/>
+  <g class="badge"><rect x="719" y="323" width="32" height="24" rx="12"/><text x="735" y="340" text-anchor="middle">G5</text></g>
+
+  <!-- Floating header: site name (G1), main menu (G2), appearance switcher (G3) -->
+  <rect class="ink" x="40" y="62" width="720" height="44" rx="14"/>
+  <text class="t" x="60" y="90" font-size="16" text-anchor="start">Für ein lebenswertes Lichtenberg</text>
+  <g class="badge"><rect x="314" y="50" width="32" height="24" rx="12"/><text x="330" y="67" text-anchor="middle">G1</text></g>
+  <text class="t" x="470" y="90" font-size="15" text-anchor="start">Über uns   Aktuelles   Kontakt</text>
+  <g class="badge"><rect x="544" y="50" width="32" height="24" rx="12"/><text x="560" y="67" text-anchor="middle">G2</text></g>
+  <circle class="ink thin" cx="725" cy="84" r="9"/>
+  <g class="badge"><rect x="709" y="50" width="32" height="24" rx="12"/><text x="725" y="67" text-anchor="middle">G3</text></g>
+
+  <!-- Banner with site name, on every page except the Startseite (G4) -->
+  <rect class="ink" x="110" y="128" width="580" height="120" rx="6"/>
+  <path class="ink thin" d="M110 128 L690 248 M690 128 L110 248"/>
+  <rect x="111" y="200" width="578" height="47" fill="#2b2b2b" opacity="0.12"/>
+  <text class="t" x="135" y="232" font-size="24" text-anchor="start" font-weight="bold">Für ein lebenswertes Lichtenberg</text>
+  <g class="badge"><rect x="659" y="116" width="32" height="24" rx="12"/><text x="675" y="133" text-anchor="middle">G4</text></g>
+
+  <!-- Page content, see the other sketches -->
+  <rect class="grey" x="110" y="275" width="580" height="190" rx="8" stroke-dasharray="6 6"/>
+  <text class="g" x="400.0" y="365" font-size="18" text-anchor="middle">Inhalt der Seite</text>
+  <text class="g" x="400.0" y="390" font-size="14" text-anchor="middle">(siehe die Skizzen der einzelnen Seiten)</text>
+
+  <!-- Footer: footer menu (G6), copyright (G7), theme credit (G8), back to top (G9) -->
+  <path class="ink thin" d="M110 495 h580"/>
+  <text class="t" x="110" y="525" font-size="15" text-anchor="start">Impressum   Datenschutz</text>
+  <g class="badge"><rect x="294" y="506" width="32" height="24" rx="12"/><text x="310" y="523" text-anchor="middle">G6</text></g>
+  <text class="t" x="110" y="560" font-size="14" text-anchor="start"><tspan class="sym">©</tspan> 2026</text>
+  <g class="badge"><rect x="169" y="543" width="32" height="24" rx="12"/><text x="185" y="560" text-anchor="middle">G7</text></g>
+  <text class="t" x="690" y="560" font-size="14" text-anchor="end">Erstellt mit Hugo &amp; Blowfish</text>
+  <g class="badge"><rect x="469" y="543" width="32" height="24" rx="12"/><text x="485" y="560" text-anchor="middle">G8</text></g>
+  <circle class="ink" cx="735" cy="555" r="17"/>
+  <text class="t" x="735" y="561" font-size="18" text-anchor="middle">↑</text>
+  <g class="badge"><rect x="719" y="508" width="32" height="24" rx="12"/><text x="735" y="525" text-anchor="middle">G9</text></g>
+</svg>

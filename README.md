@@ -47,6 +47,8 @@ Pages live in `content/` as Markdown files, and a file's location sets its URL.
 
 The Startseite's headline, intro text and buttons are in the front matter of `content/_index.md`, and its three cards use the theme's `feature` shortcode.
 
+The [content map (Inhaltskarte)](docs/inhaltskarte/README.md) names every building block of the site, in German, with a sketch of each page type, recommended lengths and image sizes, and the file and field each block comes from. Send it to authors when asking for content. When a change adds, removes, renames or moves a block, update the map in the same change.
+
 ### Add a page
 
 Create a Markdown file in `content/` with a title. To show it in the header or footer, add it to `config/_default/menus.de.toml`.

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" width="800" height="900" role="img" aria-labelledby="title">
+  <title id="title">Skizze: Beitrag unter Aktuelles</title>
+  <defs>
+    <!-- Roughens the lines so the sketch reads as a draft. Text is not filtered and stays sharp. -->
+    <filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="2.5"/>
+    </filter>
+    <style>
+      text { font-family: "Bradley Hand", "Segoe Print", "Chalkboard SE", "Comic Sans MS", cursive; }
+      .ink, .grey { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: url(#rough); }
+      .ink { stroke: #2b2b2b; }
+      .grey { stroke: #a3a3a3; }
+      .thin { stroke-width: 1.5; }
+      .btn { fill: #ffe8d9; }
+      .sym { font-family: Arial, Helvetica, sans-serif; }
+      .t { fill: #2b2b2b; }
+      .g { fill: #8a8a8a; }
+      .badge rect { fill: #d9480f; }
+      .badge.ref rect { fill: #9a9a9a; }
+      .badge text { fill: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+  <!-- Orange badges mark the blocks of this sketch. Grey badges point to shared blocks drawn in gemeinsam.svg. -->
+  <!-- White paper, so the sketch reads the same in light and dark mode -->
+  <rect width="800" height="900" fill="#fffdf7"/>
+  <rect class="ink" x="20" y="20" width="760" height="860" rx="12"/>
+  <path class="ink thin" d="M20 48 h760"/>
+  <circle class="ink thin" cx="38" cy="34" r="4"/>
+  <circle class="ink thin" cx="54" cy="34" r="4"/>
+  <circle class="ink thin" cx="70" cy="34" r="4"/>
+
+  <!-- Optional post photo behind the title (B1) -->
+  <rect class="grey" x="22" y="49" width="756" height="300" rx="6"/>
+  <path class="grey thin" d="M22 49 L778 349 M778 49 L22 349"/>
+  <text class="g" x="740" y="330" font-size="13" text-anchor="end">nur wenn der Beitrag ein Bild hat</text>
+  <g class="badge"><rect x="44" y="238" width="32" height="24" rx="12"/><text x="60" y="255" text-anchor="middle">B1</text></g>
+  <rect class="grey" x="40" y="62" width="720" height="40" rx="14"/>
+  <text class="g" x="60" y="88" font-size="14" text-anchor="start">Kopfzeile: Seitenname, Menü, Hell/Dunkel</text>
+  <g class="badge ref"><rect x="700" y="70" width="59" height="24" rx="12"/><text x="730" y="87" text-anchor="middle">G1–G3</text></g>
+  <rect class="grey" x="110" y="118" width="580" height="70" rx="6"/>
+  <path class="grey thin" d="M110 118 L690 188 M690 118 L110 188"/>
+  <text class="g" x="130" y="176" font-size="15" text-anchor="start">Banner</text>
+  <g class="badge ref"><rect x="644" y="141" width="32" height="24" rx="12"/><text x="660" y="158" text-anchor="middle">G4</text></g>
+
+  <!-- Title (B2), date (B3), reading time (B4) -->
+  <text class="t" x="110" y="290" font-size="32" text-anchor="start" font-weight="bold">Unterschriftenaktion gestartet</text>
+  <g class="badge"><rect x="584" y="268" width="32" height="24" rx="12"/><text x="600" y="285" text-anchor="middle">B2</text></g>
+  <text class="t" x="110" y="322" font-size="15" text-anchor="start">24. September 2026</text>
+  <g class="badge"><rect x="259" y="305" width="32" height="24" rx="12"/><text x="275" y="322" text-anchor="middle">B3</text></g>
+  <text class="g" x="305" y="322" font-size="15" text-anchor="start">· 1 min</text>
+  <g class="badge"><rect x="364" y="305" width="32" height="24" rx="12"/><text x="380" y="322" text-anchor="middle">B4</text></g>
+
+  <!-- Body text with subheadings, lists, links and images (B5) -->
+  <path class="ink thin" d="M110 370 h520 M110 388 h520 M110 406 h520 M110 424 h312"/>
+  <text class="t" x="110" y="465" font-size="20" text-anchor="start" font-weight="bold">Zwischenüberschrift</text>
+  <path class="ink thin" d="M110 495 h520 M110 513 h520 M110 531 h312"/>
+  <circle class="ink thin" cx="122" cy="560" r="3"/>
+  <circle class="ink thin" cx="122" cy="580" r="3"/>
+  <circle class="ink thin" cx="122" cy="600" r="3"/>
+  <path class="ink thin" d="M135 560 h300 M135 580 h300 M135 600 h240"/>
+  <path class="ink thin" d="M110 640 h520 M110 658 h312"/>
+  <g class="badge"><rect x="644" y="453" width="32" height="24" rx="12"/><text x="660" y="470" text-anchor="middle">B5</text></g>
+
+  <!-- Links to the previous and next post (B6) -->
+  <path class="grey thin" d="M110 700 h520"/>
+  <text class="g" x="110" y="730" font-size="15" text-anchor="start">← Älterer Beitrag</text>
+  <text class="g" x="630" y="730" font-size="15" text-anchor="end">Neuerer Beitrag →</text>
+  <text class="g" x="110" y="750" font-size="12" text-anchor="start">12. Oktober 2026</text>
+  <g class="badge"><rect x="644" y="712" width="32" height="24" rx="12"/><text x="660" y="729" text-anchor="middle">B6</text></g>
+  <rect class="grey" x="40" y="825" width="720" height="44" rx="8" stroke-dasharray="6 6"/>
+  <text class="g" x="60" y="852" font-size="14" text-anchor="start">Fußzeile: Impressum · Datenschutz · <tspan class="sym">©</tspan> · Nach oben</text>
+  <g class="badge ref"><rect x="696" y="835" width="59" height="24" rx="12"/><text x="725" y="852" text-anchor="middle">G6–G9</text></g>
+</svg>

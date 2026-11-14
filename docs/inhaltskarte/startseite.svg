@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 980" width="800" height="980" role="img" aria-labelledby="title">
+  <title id="title">Skizze: Startseite</title>
+  <defs>
+    <!-- Roughens the lines so the sketch reads as a draft. Text is not filtered and stays sharp. -->
+    <filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="2.5"/>
+    </filter>
+    <style>
+      text { font-family: "Bradley Hand", "Segoe Print", "Chalkboard SE", "Comic Sans MS", cursive; }
+      .ink, .grey { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: url(#rough); }
+      .ink { stroke: #2b2b2b; }
+      .grey { stroke: #a3a3a3; }
+      .thin { stroke-width: 1.5; }
+      .btn { fill: #ffe8d9; }
+      .sym { font-family: Arial, Helvetica, sans-serif; }
+      .t { fill: #2b2b2b; }
+      .g { fill: #8a8a8a; }
+      .badge rect { fill: #d9480f; }
+      .badge.ref rect { fill: #9a9a9a; }
+      .badge text { fill: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+  <!-- Orange badges mark the blocks of this sketch. Grey badges point to shared blocks drawn in gemeinsam.svg. -->
+  <!-- White paper, so the sketch reads the same in light and dark mode -->
+  <rect width="800" height="980" fill="#fffdf7"/>
+  <rect class="ink" x="20" y="20" width="760" height="940" rx="12"/>
+  <path class="ink thin" d="M20 48 h760"/>
+  <circle class="ink thin" cx="38" cy="34" r="4"/>
+  <circle class="ink thin" cx="54" cy="34" r="4"/>
+  <circle class="ink thin" cx="70" cy="34" r="4"/>
+
+  <!-- Hero photo behind the top of the page (S1) -->
+  <rect class="grey" x="22" y="49" width="756" height="330" rx="6"/>
+  <path class="grey thin" d="M22 49 L778 379 M778 49 L22 379"/>
+  <g class="badge"><rect x="44" y="128" width="32" height="24" rx="12"/><text x="60" y="145" text-anchor="middle">S1</text></g>
+  <rect class="grey" x="40" y="62" width="720" height="40" rx="14"/>
+  <text class="g" x="60" y="88" font-size="14" text-anchor="start">Kopfzeile: Seitenname, Menü, Hell/Dunkel</text>
+  <g class="badge ref"><rect x="700" y="70" width="59" height="24" rx="12"/><text x="730" y="87" text-anchor="middle">G1–G3</text></g>
+
+  <!-- Hero text: caption (S2), headline (S3), lead (S4), buttons (S5) -->
+  <text class="t" x="400.0" y="160" font-size="13" text-anchor="middle">FÜR EIN LEBENSWERTES LICHTENBERG</text>
+  <g class="badge"><rect x="564" y="143" width="32" height="24" rx="12"/><text x="580.0" y="160" text-anchor="middle">S2</text></g>
+  <text class="t" x="400.0" y="212" font-size="38" text-anchor="middle" font-weight="bold">Gemeinsam gegen</text>
+  <text class="t" x="400.0" y="254" font-size="38" text-anchor="middle" font-weight="bold">das Bauprojekt</text>
+  <g class="badge"><rect x="574" y="193" width="32" height="24" rx="12"/><text x="590.0" y="210" text-anchor="middle">S3</text></g>
+  <path class="ink thin" d="M220 285 h360 M220 303 h216"/>
+  <g class="badge"><rect x="589" y="278" width="32" height="24" rx="12"/><text x="605.0" y="295" text-anchor="middle">S4</text></g>
+  <rect class="ink btn" x="230" y="330" width="110" height="30" rx="8"/>
+  <text class="t" x="285.0" y="350" font-size="14" text-anchor="middle">Aktuelles</text>
+  <rect class="ink" x="350" y="330" width="100" height="30" rx="8"/>
+  <text class="t" x="400.0" y="350" font-size="14" text-anchor="middle">Über uns</text>
+  <rect class="ink" x="460" y="330" width="100" height="30" rx="8"/>
+  <text class="t" x="510.0" y="350" font-size="14" text-anchor="middle">Kontakt</text>
+  <g class="badge"><rect x="574" y="333" width="32" height="24" rx="12"/><text x="590" y="350" text-anchor="middle">S5</text></g>
+
+  <!-- Three topic cards (S6) -->
+  <rect class="ink" x="110" y="405" width="180" height="170" rx="12"/>
+  <rect class="ink thin" x="185" y="420" width="30" height="30" rx="6"/>
+  <text class="t" x="200" y="478" font-size="15" text-anchor="middle" font-weight="bold">Thema 1</text>
+  <path class="ink thin" d="M135 500 h130 M135 514 h130 M135 528 h78"/>
+  <text class="t" x="200" y="560" font-size="13" text-anchor="middle">Mehr erfahren →</text>
+  <rect class="ink" x="310" y="405" width="180" height="170" rx="12"/>
+  <rect class="ink thin" x="385" y="420" width="30" height="30" rx="6"/>
+  <text class="t" x="400" y="478" font-size="15" text-anchor="middle" font-weight="bold">Thema 2</text>
+  <path class="ink thin" d="M335 500 h130 M335 514 h130 M335 528 h78"/>
+  <text class="t" x="400" y="560" font-size="13" text-anchor="middle">Mehr erfahren →</text>
+  <rect class="ink" x="510" y="405" width="180" height="170" rx="12"/>
+  <rect class="ink thin" x="585" y="420" width="30" height="30" rx="6"/>
+  <text class="t" x="600" y="478" font-size="15" text-anchor="middle" font-weight="bold">Thema 3</text>
+  <path class="ink thin" d="M535 500 h130 M535 514 h130 M535 528 h78"/>
+  <text class="t" x="600" y="560" font-size="13" text-anchor="middle">Mehr erfahren →</text>
+  <g class="badge"><rect x="694" y="393" width="32" height="24" rx="12"/><text x="710" y="410" text-anchor="middle">S6</text></g>
+
+  <!-- Free text below the cards (S7) -->
+  <path class="ink thin" d="M110 610 h420 M110 626 h252"/>
+  <g class="badge"><rect x="544" y="600" width="32" height="24" rx="12"/><text x="560" y="617" text-anchor="middle">S7</text></g>
+
+  <!-- Recent posts: heading (S8), post cards (S9), more button (S10) -->
+  <text class="t" x="110" y="680" font-size="22" text-anchor="start" font-weight="bold">Neue Beiträge</text>
+  <g class="badge"><rect x="264" y="661" width="32" height="24" rx="12"/><text x="280" y="678" text-anchor="middle">S8</text></g>
+  <rect class="grey" x="110" y="700" width="180" height="130" rx="10"/>
+  <text class="g" x="124" y="728" font-size="14" text-anchor="start" font-weight="bold">Titel des Beitrags</text>
+  <text class="g" x="124" y="750" font-size="12" text-anchor="start">28. Oktober 2026 · 1 min</text>
+  <path class="grey thin" d="M124 772 h150 M124 786 h150 M124 800 h90"/>
+  <rect class="grey" x="310" y="700" width="180" height="130" rx="10"/>
+  <text class="g" x="324" y="728" font-size="14" text-anchor="start" font-weight="bold">Titel des Beitrags</text>
+  <text class="g" x="324" y="750" font-size="12" text-anchor="start">28. Oktober 2026 · 1 min</text>
+  <path class="grey thin" d="M324 772 h150 M324 786 h150 M324 800 h90"/>
+  <rect class="grey" x="510" y="700" width="180" height="130" rx="10"/>
+  <text class="g" x="524" y="728" font-size="14" text-anchor="start" font-weight="bold">Titel des Beitrags</text>
+  <text class="g" x="524" y="750" font-size="12" text-anchor="start">28. Oktober 2026 · 1 min</text>
+  <path class="grey thin" d="M524 772 h150 M524 786 h150 M524 800 h90"/>
+  <g class="badge"><rect x="694" y="688" width="32" height="24" rx="12"/><text x="710" y="705" text-anchor="middle">S9</text></g>
+  <rect class="grey" x="340.0" y="850" width="120" height="30" rx="8"/>
+  <text class="g" x="400.0" y="870" font-size="14" text-anchor="middle">Zeige Mehr</text>
+  <g class="badge"><rect x="470" y="853" width="41" height="24" rx="12"/><text x="490.0" y="870" text-anchor="middle">S10</text></g>
+  <rect class="grey" x="40" y="905" width="720" height="44" rx="8" stroke-dasharray="6 6"/>
+  <text class="g" x="60" y="932" font-size="14" text-anchor="start">Fußzeile: Impressum · Datenschutz · <tspan class="sym">©</tspan> · Nach oben</text>
+  <g class="badge ref"><rect x="696" y="915" width="59" height="24" rx="12"/><text x="725" y="932" text-anchor="middle">G6–G9</text></g>
+</svg>

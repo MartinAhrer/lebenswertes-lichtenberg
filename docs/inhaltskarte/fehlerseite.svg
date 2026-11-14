@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" width="800" height="640" role="img" aria-labelledby="title">
+  <title id="title">Skizze: Fehlerseite (Seite nicht gefunden)</title>
+  <defs>
+    <!-- Roughens the lines so the sketch reads as a draft. Text is not filtered and stays sharp. -->
+    <filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="2.5"/>
+    </filter>
+    <style>
+      text { font-family: "Bradley Hand", "Segoe Print", "Chalkboard SE", "Comic Sans MS", cursive; }
+      .ink, .grey { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: url(#rough); }
+      .ink { stroke: #2b2b2b; }
+      .grey { stroke: #a3a3a3; }
+      .thin { stroke-width: 1.5; }
+      .btn { fill: #ffe8d9; }
+      .sym { font-family: Arial, Helvetica, sans-serif; }
+      .t { fill: #2b2b2b; }
+      .g { fill: #8a8a8a; }
+      .badge rect { fill: #d9480f; }
+      .badge.ref rect { fill: #9a9a9a; }
+      .badge text { fill: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+  <!-- Orange badges mark the blocks of this sketch. Grey badges point to shared blocks drawn in gemeinsam.svg. -->
+  <!-- White paper, so the sketch reads the same in light and dark mode -->
+  <rect width="800" height="640" fill="#fffdf7"/>
+  <rect class="ink" x="20" y="20" width="760" height="600" rx="12"/>
+  <path class="ink thin" d="M20 48 h760"/>
+  <circle class="ink thin" cx="38" cy="34" r="4"/>
+  <circle class="ink thin" cx="54" cy="34" r="4"/>
+  <circle class="ink thin" cx="70" cy="34" r="4"/>
+  <rect class="grey" x="40" y="62" width="720" height="40" rx="14"/>
+  <text class="g" x="60" y="88" font-size="14" text-anchor="start">Kopfzeile: Seitenname, Menü, Hell/Dunkel</text>
+  <g class="badge ref"><rect x="700" y="70" width="59" height="24" rx="12"/><text x="730" y="87" text-anchor="middle">G1–G3</text></g>
+  <rect class="grey" x="110" y="118" width="580" height="70" rx="6"/>
+  <path class="grey thin" d="M110 118 L690 188 M690 118 L110 188"/>
+  <text class="g" x="130" y="176" font-size="15" text-anchor="start">Banner</text>
+  <g class="badge ref"><rect x="644" y="141" width="32" height="24" rx="12"/><text x="660" y="158" text-anchor="middle">G4</text></g>
+
+  <!-- Large faint 404 (F1), small caption (F2), heading (F3), explanation (F4), button (F5) -->
+  <text x="400.0" y="400" font-size="200" text-anchor="middle" font-weight="bold" fill="#e8e6df">404</text>
+  <g class="badge"><rect x="134" y="288" width="32" height="24" rx="12"/><text x="150" y="305" text-anchor="middle">F1</text></g>
+  <text class="t" x="400.0" y="260" font-size="13" text-anchor="middle">FEHLER 404</text>
+  <g class="badge"><rect x="464" y="243" width="32" height="24" rx="12"/><text x="480.0" y="260" text-anchor="middle">F2</text></g>
+  <text class="t" x="400.0" y="305" font-size="32" text-anchor="middle" font-weight="bold">Seite nicht gefunden 😕</text>
+  <g class="badge"><rect x="614" y="285" width="32" height="24" rx="12"/><text x="630.0" y="302" text-anchor="middle">F3</text></g>
+  <text class="t" x="400.0" y="345" font-size="16" text-anchor="middle">Es sieht so aus, als ob es diese Seite nicht gibt.</text>
+  <g class="badge"><rect x="609" y="328" width="32" height="24" rx="12"/><text x="625.0" y="345" text-anchor="middle">F4</text></g>
+  <rect class="ink btn" x="330.0" y="380" width="140" height="30" rx="8"/>
+  <text class="t" x="400.0" y="400" font-size="14" text-anchor="middle">Zur Startseite</text>
+  <g class="badge"><rect x="484" y="383" width="32" height="24" rx="12"/><text x="500.0" y="400" text-anchor="middle">F5</text></g>
+  <rect class="grey" x="40" y="565" width="720" height="44" rx="8" stroke-dasharray="6 6"/>
+  <text class="g" x="60" y="592" font-size="14" text-anchor="start">Fußzeile: Impressum · Datenschutz · <tspan class="sym">©</tspan> · Nach oben</text>
+  <g class="badge ref"><rect x="696" y="575" width="59" height="24" rx="12"/><text x="725" y="592" text-anchor="middle">G6–G9</text></g>
+</svg>

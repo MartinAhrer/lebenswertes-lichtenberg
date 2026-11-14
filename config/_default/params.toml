@@ -78,7 +78,7 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
   disableHeroImageFilter = false # only used when layout equals hero
 
 [article]
-  showDate = true
+  showDate = false # on for news posts via the cascade in content/aktuelles/_index.md
   showViews = false
   showLikes = false
   showDateOnlyInArticle = false
@@ -97,9 +97,9 @@ forgejoDefaultServer = "https://v11.next.forgejo.org"
   editAppendPath = true
   seriesOpened = false
   showHeadingAnchors = true
-  showPagination = true
+  showPagination = false # on for news posts, see showDate
   invertPagination = false
-  showReadingTime = true
+  showReadingTime = false # on for news posts, see showDate
   showReadingProgress = true
   showTableOfContents = false
   # showRelatedContent = false
