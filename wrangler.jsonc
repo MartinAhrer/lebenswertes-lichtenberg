@@ -10,5 +10,7 @@
     "not_found_handling": "404-page",
     // Hugo writes pages as folder/index.html and links to folder/.
     "html_handling": "auto-trailing-slash"
-  }
+  },
+  // Enables per-branch previews; `npx wrangler preview` refuses to run without it.
+  "previews": {}
 }
