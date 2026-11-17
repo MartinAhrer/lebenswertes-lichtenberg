@@ -39,10 +39,10 @@
   <g class="badge ref"><rect x="700" y="70" width="59" height="24" rx="12"/><text x="730" y="87" text-anchor="middle">G1–G3</text></g>
 
   <!-- Hero text: caption (S2), headline (S3), lead (S4), buttons (S5) -->
-  <text class="t" x="400.0" y="160" font-size="13" text-anchor="middle">FÜR EIN LEBENSWERTES LICHTENBERG</text>
-  <g class="badge"><rect x="564" y="143" width="32" height="24" rx="12"/><text x="580.0" y="160" text-anchor="middle">S2</text></g>
-  <text class="t" x="400.0" y="212" font-size="38" text-anchor="middle" font-weight="bold">Gemeinsam gegen</text>
-  <text class="t" x="400.0" y="254" font-size="38" text-anchor="middle" font-weight="bold">das Bauprojekt</text>
+  <text class="t" x="400.0" y="160" font-size="13" text-anchor="middle">LICHTENBERG SOLL SCHÖNER UND LEBENSWERTER WERDEN</text>
+  <g class="badge"><rect x="628" y="143" width="32" height="24" rx="12"/><text x="644.0" y="160" text-anchor="middle">S2</text></g>
+  <text class="t" x="400.0" y="212" font-size="38" text-anchor="middle" font-weight="bold">Wir leben gerne</text>
+  <text class="t" x="400.0" y="254" font-size="38" text-anchor="middle" font-weight="bold">in Lichtenberg</text>
   <g class="badge"><rect x="574" y="193" width="32" height="24" rx="12"/><text x="590.0" y="210" text-anchor="middle">S3</text></g>
   <path class="ink thin" d="M220 285 h360 M220 303 h216"/>
   <g class="badge"><rect x="589" y="278" width="32" height="24" rx="12"/><text x="605.0" y="295" text-anchor="middle">S4</text></g>

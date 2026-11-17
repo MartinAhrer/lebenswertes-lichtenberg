@@ -3,7 +3,7 @@
 # https://blowfish.page/docs/getting-started/
 
 theme = "blowfish"
-baseURL = "https://lb-verein-website.pages.dev/"
+baseURL = "https://lebenswertes-lichtenberg.pages.dev/"
 defaultContentLanguage = "de"
 disableKinds = ["taxonomy", "term"]
 

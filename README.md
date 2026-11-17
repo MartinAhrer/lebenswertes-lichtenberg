@@ -1,6 +1,6 @@
 # Für ein lebenswertes Lichtenberg
 
-The Verein's public website, built with [Hugo](https://gohugo.io/) and the [Blowfish](https://blowfish.page/) theme. Content is written in Markdown and hosted on Cloudflare Pages.
+The Verein's public website, built with [Hugo](https://gohugo.io/) and the [Blowfish](https://blowfish.page/) theme. Content is written in Markdown and hosted on Cloudflare Workers.
 
 ## Requirements
 
@@ -96,25 +96,31 @@ grep -r PLATZHALTER content/
 
 ## Deployment
 
-Cloudflare Pages builds the site on every push:
+Cloudflare Workers Builds builds the site on every push. The Worker only serves the static files in `public/`, as configured in `wrangler.jsonc`:
 
 - A push to `main` updates the live site.
-- A push to any other branch creates a separate preview URL and leaves the live site unchanged.
+- A push to any other branch creates a separate preview URL and leaves the live site unchanged. Preview URLs on `workers.dev` send `X-Robots-Tag: noindex`, so search engines skip them.
 - If a build fails, the previous version stays live.
 
 ### Cloudflare settings
+
+Create the Worker under Workers & Pages → Create → Import a repository, and name it `lebenswertes-lichtenberg`, as in `wrangler.jsonc`. Workers Builds ignores build settings in `wrangler.jsonc`, so set these in the dashboard:
 
 | Setting | Value |
 | --- | --- |
 | Production branch | `main` |
 | Build command | `sh scripts/cloudflare-build.sh` |
-| Output directory | `public` |
-| Environment variable | `HUGO_VERSION=0.167.0` for production and preview |
+| Deploy command | `npx wrangler deploy` |
+| Preview builds | On, for all other branches |
+| Preview command | `npx wrangler preview` (the default) |
+| Build variable | `HUGO_VERSION=0.167.0` |
 | Web Analytics | Off |
+
+The build script uses the configured `baseURL` on `main`. On other branches it builds with root-relative links, so a preview works at whatever address Cloudflare gives it.
 
 Cloudflare can't use the local container, so `HUGO_VERSION` must match the image tag in `compose.yaml`. Without it, Cloudflare uses its default Hugo, which is too old for the theme. The build log should show `v0.167.0` and `+extended`.
 
-`baseURL` in `config/_default/hugo.toml` must match the live address, including after adding a custom domain.
+`baseURL` in `config/_default/hugo.toml` must match the live address: `https://lebenswertes-lichtenberg.<account-subdomain>.workers.dev/` until a custom domain is added, then that domain.
 
 ## Upgrading Hugo and the theme
 
@@ -124,7 +130,7 @@ Change all of these together:
 
 1. Check out the new theme tag: `git -C themes/blowfish fetch --tags`, then `git -C themes/blowfish checkout <tag>`.
 2. Update the image tag in `compose.yaml`.
-3. Update `HUGO_VERSION` in Cloudflare and in this README.
+3. Update the `HUGO_VERSION` build variable in Cloudflare and in this README.
 4. Run a local build, then check a preview deployment before merging to `main`.
 
 ## Launch checklist
@@ -133,5 +139,5 @@ Change all of these together:
 - [ ] Impressum and Datenschutz contain reviewed text, and Datenschutz names Cloudflare as the host.
 - [ ] `baseURL` matches the live address.
 - [ ] The sample posts in `content/aktuelles/` are removed or replaced.
-- [ ] The Bildnachweis section in `content/impressum.md` is kept when the legal text is added, and matches the images in use. The banner photo's CC BY-SA 4.0 license requires this credit.
+- [ ] The Bildnachweis section in `content/datenschutz.md` is kept when the legal text is added, and matches the images in use. The CC BY-SA licenses of the banner and Startseite photos require these credits.
 - [ ] The sample photo, `content/aktuelles/feature.jpg`, is replaced with a local image. To replace it, overwrite that file. The current photo shows Amsterdam, by Fons Heijnsbroek, [CC0 on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2006.10_-_%27Building_to_the_sky%27_-_Amsterdam_photos_and_pictures,_construction-site_in_light_of_late_afternoon_sky_in_Fall_above_the_city_with_cranes_at_the_Oosterdok;_Dutch_city_%2B_geotag,_Fons_Heijnsbroek,_The_Netherlands_(27369893630).jpg).

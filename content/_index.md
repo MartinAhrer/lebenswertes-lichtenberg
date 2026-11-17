@@ -1,29 +1,32 @@
 ---
-title: "Gemeinsam gegen das Bauprojekt"
-heroCaption: "Für ein lebenswertes Lichtenberg"
-heroLead: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-heroImage: "img/banner.jpg"
+title: "Wir leben gerne in Lichtenberg"
+heroCaption: "Lichtenberg soll schöner und lebenswerter werden"
+heroLead: "Wir laden Sie ein, mit uns die Zukunft Lichtenbergs zu gestalten"
+heroImage: "images/Lichtenberg_20121014.jpeg"
 heroButtons:
   - label: "Aktuelles"
-    url: "/aktuelles/"
+    url: "/aktuelles"
   - label: "Über uns"
-    url: "/ueber-uns/"
+    url: "/ueber-uns"
     style: "outline"
   - label: "Kontakt"
-    url: "/kontakt/"
+    url: "/kontakt"
     style: "outline"
 ---
 
 {{< feature-grid >}}
-{{< feature icon="circle-info" title="Worum es geht" url="/ueber-uns/" label="Mehr erfahren" >}}
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+{{< feature icon="circle-info" title="Worum es geht" url="/ueber-uns" label="Mehr erfahren" >}}
+Die aktuelle Politik der Gemeinde zielt in die falsche Richtung: Ein Riesenbauprojekt in der Libenauerstraße ist falsch, ein Wald soll abgeholzt werden, …
 {{< /feature >}}
-{{< feature icon="list-check" title="Was wir fordern" url="/aktuelles/" label="Zu den Neuigkeiten" >}}
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+{{< feature icon="list-check" title="Was wir fordern" url="/aktuelles" label="Zu den Neuigkeiten" >}}
+Derzeit wird unsere Zukunft verbaut, ohne uns zu informieren. Wir alle sollen an der Planung für die Zukunft beteiligt werden.
 {{< /feature >}}
-{{< feature icon="heart" title="Wie Sie helfen können" url="/kontakt/" label="Kontakt aufnehmen" >}}
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lesen Sie auch die [aktuellen Neuigkeiten](/aktuelles/).
+
+{{< feature icon="heart" title="Wie Sie helfen können" url="/kontakt" label="Kontakt aufnehmen" >}}
+Informieren Sie sich, beteiligen Sie sich, sagen Sie dem Gemeinderat, was Sie möchten – auch per Stimmzettel.
 {{< /feature >}}
+
 {{< /feature-grid >}}
 
-*PLATZHALTER: Beispieltext. Durch echte Informationen des Vereins ersetzen.*

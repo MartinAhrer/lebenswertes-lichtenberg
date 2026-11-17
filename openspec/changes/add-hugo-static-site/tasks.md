@@ -26,6 +26,7 @@ Tasks marked **(account access)** need the repository owner's GitHub or Cloudfla
 
 - [x] 4.1 Add `scripts/cloudflare-build.sh` to print `hugo version`, stop on any error, and choose the base URL from `CF_PAGES_BRANCH` and `CF_PAGES_URL`; verify by running it in the container (`docker compose run --rm --entrypoint sh` with `-e` for the variables) with `CF_PAGES_BRANCH=main`, then with a preview branch and example URL, and inspecting `sitemap.xml` each time
 - [x] 4.2 Write `README.md` covering cloning with `--recurse-submodules`, the Docker requirement, building with `docker compose run --rm hugo --gc --minify`, local preview with `docker compose up server`, adding pages and news posts, the Cloudflare settings and why `HUGO_VERSION` must match the image tag, upgrading Hugo and the theme together, and a launch checklist; verify the documented commands run as written
+- [x] 4.3 Move hosting from Cloudflare Pages to Workers as in `design.md` Decisions 5 and 6: add `wrangler.jsonc`, switch the build script to `WORKERS_CI_BRANCH` with root-relative preview links, and update the README; verify the script in the container with `WORKERS_CI_BRANCH=main` and with a preview branch, that preview output contains no production address, and that `npx wrangler deploy --dry-run` reads the built `public/`
 
 ## 5. Local integration checks
 
@@ -40,15 +41,15 @@ Tasks marked **(account access)** need the repository owner's GitHub or Cloudfla
 ## 6. Hosting setup
 
 - [ ] 6.1 **(account access)** Create the GitHub repository, add it as `origin` and push `main`, then verify the theme submodule shows on GitHub at tag `v3.9.0`
-- [ ] 6.2 **(account access)** Create the Cloudflare Pages project through Git integration with the settings in `design.md` Decision 5, including `HUGO_VERSION=0.167.0` for production and preview, and verify Web Analytics is off
-- [ ] 6.3 **(account access)** Confirm the assigned `pages.dev` address; if it differs from `baseURL`, update `baseURL` and push, then verify the setting matches
+- [ ] 6.2 **(account access)** Create the Worker `lebenswertes-lichtenberg` through Workers Builds with the settings in `design.md` Decision 5, including the `HUGO_VERSION=0.167.0` build variable and preview builds for other branches, and verify Web Analytics is off
+- [ ] 6.3 **(account access)** Read the account's `workers.dev` subdomain, set `baseURL` to `https://lebenswertes-lichtenberg.<subdomain>.workers.dev/` and push, then verify the production address serves the site
 
 ## 7. Deployment verification
 
 - [ ] 7.1 Verify the production build log shows `v0.167.0` and `+extended`, and that every required URL returns HTTP status 200
 - [ ] 7.2 Verify that an unknown production URL returns HTTP status 404 with the German error page, and that production HTML and `sitemap.xml` use only the configured production URL
 - [ ] 7.3 Load production pages with browser developer tools open and verify no script, stylesheet or font is requested from another domain
-- [ ] 7.4 Push a temporary branch and verify its preview URL serves the change, internal links and assets stay on the preview URL, responses include `X-Robots-Tag: noindex`, and production is unchanged
+- [ ] 7.4 Push a temporary branch and verify its `workers.dev` preview URL serves the change, internal links and assets stay on the preview URL, responses include `X-Robots-Tag: noindex`, and production is unchanged
 - [ ] 7.5 Push a commit that breaks the build to the temporary branch, verify the deployment is reported as failed and production is unchanged, then delete the branch
 - [ ] 7.6 Push a small content change to `main` and verify production updates without manual steps
 
@@ -62,6 +63,7 @@ Tasks marked **(account access)** need the repository owner's GitHub or Cloudfla
 - [x] 8.6 Verify the built site loads images only from its own domain, with the banner in place
 - [x] 8.7 Adopt the look of the Blowfish example site (colours, floating header, landing page and news cards), and verify every page at 375 pixels and desktop width in dark appearance, and the Startseite in light appearance
 - [x] 8.8 Copy the example site's `site-background.svg` into `assets/images/`, enable `backgroundCanvas`, and set `background` hero styles for lists and articles as in `design.md` Decision 3; verify the backdrop on every page including `404.html`, that the Aktuelles title stays readable over its image, and that every page has no horizontal page scrolling at 375 pixels and desktop width in dark and light appearance
+- [ ] 8.9 Use `assets/images/Lichtenberg_20121014.jpeg` as the Startseite photo and have the banner crop the middle of `heroImage` as in `design.md` Decisions 9 and 10, with its credit in the Datenschutz Bildnachweis and the content map (`S1`, `G4`, Bilder) updated; verify the Startseite hero and the banner on every other page at 375 pixels and desktop width in dark and light appearance, with the site name readable and no horizontal page scrolling
 
 ## Workflow follow-up
 

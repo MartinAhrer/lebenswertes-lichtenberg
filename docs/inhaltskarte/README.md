@@ -32,7 +32,7 @@ Diese Bausteine stehen auf jeder Seite. Die meisten sind fest eingestellt. Ände
 | G1 | Seitenname | Name der Website oben links und im Browser-Tab | fest eingestellt | `config/_default/languages.de.toml`, Feld `title` |
 | G2 | Hauptmenü | Links zu den wichtigsten Seiten | fest eingestellt; je Eintrag höchstens 15 Zeichen, höchstens 5 Einträge | `config/_default/menus.de.toml`, Abschnitte `[[main]]` |
 | G3 | Hell/Dunkel-Schalter | Wechselt zwischen hellem und dunklem Erscheinungsbild | automatisch | – |
-| G4 | Banner | Bildstreifen mit dem Seitennamen unter der Kopfzeile, auf jeder Seite außer der Startseite | Bild wie bei `S1`; der Banner zeigt davon einen flachen Streifen von oben (4 : 1), der Text kommt aus `G1` | Bild: `assets/img/banner.jpg` |
+| G4 | Banner | Bildstreifen mit dem Seitennamen unter der Kopfzeile, auf jeder Seite außer der Startseite | Bild wie bei `S1`; der Banner zeigt davon einen flachen Streifen aus der Mitte (4 : 1), der Text kommt aus `G1` | Bild: wie `S1`, Feld `heroImage` in `content/_index.md` |
 | G5 | Hintergrund | Ruhiges Muster hinter allen Seiten | fest eingestellt | `assets/images/site-background.svg` |
 | G6 | Fußzeilenmenü | Links zu Impressum und Datenschutz | fest eingestellt | `config/_default/menus.de.toml`, Abschnitte `[[footer]]` |
 | G7 | Copyright-Zeile | `©` und das aktuelle Jahr | automatisch; ein eigener Text ersetzt sie, höchstens 60 Zeichen, `{ year }` wird zum aktuellen Jahr | optional `config/_default/languages.de.toml`, Feld `copyright` |
@@ -49,7 +49,7 @@ Datei: `content/_index.md`. Die Felder `S1` bis `S5` stehen oben im Kopfbereich 
 
 | ID | Baustein | Wofür | Umfang | Wo eintragen |
 | --- | --- | --- | --- | --- |
-| S1 | Titelbild | Großes Foto hinter dem oberen Teil der Startseite | Foto, siehe [Bilder](#bilder) | Feld `heroImage`, Pfad unter `assets/`, zurzeit `img/banner.jpg` |
+| S1 | Titelbild | Großes Foto hinter dem oberen Teil der Startseite | Foto, siehe [Bilder](#bilder) | Feld `heroImage`, Pfad unter `assets/`, zurzeit `images/Lichtenberg_20121014.jpeg` |
 | S2 | Überzeile | Kurzer Satz über der Schlagzeile, in Großbuchstaben | höchstens 40 Zeichen | Feld `heroCaption` |
 | S3 | Schlagzeile | Die Hauptbotschaft der Website | höchstens 30 Zeichen (auf dem Handy 3 Zeilen) | Feld `title` |
 | S4 | Einleitung | Ein, zwei Sätze, worum es geht | höchstens 150 Zeichen | Feld `heroLead` |
@@ -116,7 +116,7 @@ Gilt für Über uns (`content/ueber-uns.md`), Kontakt (`content/kontakt.md`), Im
 | T3 | Zwischenüberschrift | Gliedert längere Seiten | höchstens 50 Zeichen | Zeile mit `## ` am Anfang |
 | T4 | Listen und Tabellen | Aufzählungen, zum Beispiel Ziele oder Vorstand | Tabellen höchstens 3 Spalten mit kurzen Einträgen, damit sie auf das Handy passen | Listen mit `- `, Tabellen mit senkrechten Strichen zwischen den Spalten |
 
-Das **Impressum** muss den Abschnitt „Bildnachweis“ behalten und um jedes neue Foto ergänzen, siehe [Bilder](#bilder). Das Menü in `G2` und `G6` verlinkt diese Seiten. Eine neue Textseite erscheint dort erst, wenn sie im Menü eingetragen wird.
+Die Seite **Datenschutz** muss den Abschnitt „Bildnachweis“ behalten und um jedes neue Foto ergänzen, siehe [Bilder](#bilder). Das Menü in `G2` und `G6` verlinkt diese Seiten. Eine neue Textseite erscheint dort erst, wenn sie im Menü eingetragen wird.
 
 ## Fehlerseite (F)
 
@@ -138,9 +138,9 @@ Erscheint, wenn jemand eine Adresse aufruft, die es nicht gibt. Alle Bausteine s
 
 Für alle Fotos (`S1`, `G4`, `A1`, `B1`):
 
-- **Rechte:** Der Verein braucht das Recht, das Foto zu veröffentlichen. Verlangt die Lizenz eine Nennung, kommt sie in den Abschnitt „Bildnachweis“ in `content/impressum.md`.
+- **Rechte:** Der Verein braucht das Recht, das Foto zu veröffentlichen. Verlangt die Lizenz eine Nennung, kommt sie in den Abschnitt „Bildnachweis“ in `content/datenschutz.md`.
 - **Format:** Querformat, mindestens 1920 × 1080 Pixel, als JPEG, höchstens 2 MB.
-- **Ausschnitt:** Die Website schneidet Fotos je nach Bildschirm zu. Das Wichtige gehört in die Mitte, beim Foto für `S1` und `G4` ins obere Drittel, weil der Banner nur einen Streifen von oben zeigt. Keine Schrift im Foto, sie würde abgeschnitten.
+- **Ausschnitt:** Die Website schneidet Fotos je nach Bildschirm zu. Das Wichtige gehört in die Mitte, beim Foto für `S1` und `G4` in einen waagrechten Streifen durch die Mitte, weil der Banner nur diesen Streifen zeigt. Keine Schrift im Foto, sie würde abgeschnitten.
 - **Hinter Text:** `S1`, `A1` und `B1` liegen abgedunkelt hinter Überschriften. Ruhige Fotos ohne viele Details lassen den Text gut lesbar.
 - **Alternativtext:** Ein kurzer Satz, was auf dem Foto zu sehen ist, für Menschen, die das Bild nicht sehen. `S1` und `G4` sind Schmuck und brauchen keinen.
 - **Dateinamen:** Kleinbuchstaben, ohne Umlaute und Leerzeichen, zum Beispiel `feature.jpg`.

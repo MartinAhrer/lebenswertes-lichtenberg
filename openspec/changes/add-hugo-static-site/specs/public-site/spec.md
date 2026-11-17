@@ -15,7 +15,7 @@ Every page SHALL show the site name "Für ein lebenswertes Lichtenberg" in its h
 - **AND** the browser title contains "Für ein lebenswertes Lichtenberg"
 
 ### Requirement: Site-wide banner
-Every page SHALL show an image banner containing the site name directly under the main navigation. On the Startseite, the banner is the large hero image behind the campaign headline.
+Every page SHALL show an image banner containing the site name directly under the main navigation. On the Startseite, the banner is the large hero image behind the campaign headline. On every other page, the banner SHALL show a 4 : 1 strip from the middle of the same photo, so the banner and the Startseite always show one photo.
 
 #### Scenario: Banner on any page
 - **WHEN** a visitor opens any page of the site, including the error page
@@ -24,6 +24,11 @@ Every page SHALL show an image banner containing the site name directly under th
 #### Scenario: Banner on the Startseite
 - **WHEN** a visitor opens the Startseite
 - **THEN** a large image appears behind the site name and campaign headline
+
+#### Scenario: Banner matches the Startseite photo
+- **GIVEN** the Startseite photo is replaced
+- **WHEN** a visitor opens any other page
+- **THEN** the banner shows a strip from the middle of the new photo, without a separate banner image being changed
 
 #### Scenario: Banner on a phone
 - **GIVEN** a browser viewport 375 pixels wide
@@ -142,6 +147,14 @@ All pages SHALL be readable and navigable at phone and desktop widths without ho
 - **WHEN** a visitor opens any page
 - **THEN** the page has no horizontal page scrolling
 - **AND** every main navigation link can be reached
+
+### Requirement: Image credits
+Every photo on the site whose license requires credit SHALL be credited, with author, license and source, in a "Bildnachweis" section on the Datenschutz page.
+
+#### Scenario: Finding an image credit
+- **GIVEN** a photo on the site whose license requires credit
+- **WHEN** a visitor follows the Datenschutz link in any page footer
+- **THEN** the Bildnachweis section names the photo's author, license and source
 
 ### Requirement: No third-party resources or tracking
 Pages SHALL load scripts, styles, fonts and images only from the site's own origin, and SHALL contain no analytics, advertising or tracking code, so that no consent banner is needed for them.

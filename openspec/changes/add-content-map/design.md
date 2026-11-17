@@ -80,7 +80,7 @@ Each sketch section shows the image, then a table:
 | --- | --- | --- | --- | --- |
 | S2 | Schlagzeile | … | max. 40 Zeichen | `content/_index.md`, Feld `title` |
 
-Automatic or fixed blocks have *automatisch* or *fest eingestellt* in the "Umfang" column. Their "Wo eintragen" column names the source, for example "aus den Beiträgen: `title`, `date`, Textanfang". After the tables, a short section covers images for all blocks: rights and credit in the Impressum's Bildnachweis, file formats, and where alternative text goes.
+Automatic or fixed blocks have *automatisch* or *fest eingestellt* in the "Umfang" column. Their "Wo eintragen" column names the source, for example "aus den Beiträgen: `title`, `date`, Textanfang". After the tables, a short section covers images for all blocks: rights and credit in the Datenschutz page's Bildnachweis, file formats, and where alternative text goes.
 
 - **Alternative: one subsection per block.** Rejected because about 35 blocks would make the map long. A table can be scanned beside its sketch.
 
@@ -99,7 +99,7 @@ Limits are recommendations that keep a block tidy at 375 pixels and at desktop w
 | Post summary (card preview) | 150 characters in `summary` | the card cuts the preview after 5 lines |
 | Aktuelles and text page titles | 25 characters | 2 lines on a phone |
 | Subheadings | 50 characters | 2 lines on a phone |
-| Photos | landscape, at least 1920 × 1080 px, JPEG, at most 2 MB | the theme scales the Startseite photo to 1920 px and page backgrounds to 1200 px wide; the banner crops a 4 : 1 strip from the top |
+| Photos | landscape, at least 1920 × 1080 px, JPEG, at most 2 MB | the theme scales the Startseite photo to 1920 px and page backgrounds to 1200 px wide; the banner crops a 4 : 1 strip from the middle of the Startseite photo |
 
 A single long word can still overflow at phone width. The site already hyphenates headings, so the map advises avoiding very long compound words in button labels and card titles.
 
@@ -133,7 +133,7 @@ The theme reads each setting as `.Params.showDate | default site.Params.article.
 - **Rough-line filters render differently between viewers** → Keep the displacement small and the text unfiltered, so labels stay sharp even where the filter isn't supported.
 - **The handwriting font is missing on a system** → The stack ends in `cursive`, and the layout leaves room for wider fallback fonts.
 - **Limits look stricter than they are** → The map calls them recommendations. Exceeding them doesn't break the build.
-- **Authors put rights-encumbered photos in** → The image section requires rights and credit, and points to the Bildnachweis section in the Impressum.
+- **Authors put rights-encumbered photos in** → The image section requires rights and credit, and points to the Bildnachweis section on the Datenschutz page.
 
 ## Migration Plan
 

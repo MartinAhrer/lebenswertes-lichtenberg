@@ -11,8 +11,8 @@ Facts checked on 2026-11-04 that shape this design:
 | Blowfish | Latest release is v3.9.0. It declares Hugo Extended 0.164.0 to 0.167.0 and ships a German translation (`i18n/de.yaml`). |
 | Hugo | Latest release and Homebrew are both 0.169.0, which is above the Blowfish maximum. |
 | Hugo image | The official `ghcr.io/gohugoio/hugo:v0.167.0` image is the Extended edition, supports amd64 and arm64, and works from `/project`. |
-| Cloudflare Pages | The v3 build image defaults to Hugo 0.147.7, which is below the Blowfish minimum. `HUGO_VERSION` selects any other version. |
-| Cloudflare guidance | The Pages documentation now recommends Workers for new projects. Pages remains available and supported. |
+| Cloudflare Workers Builds | The build image includes Hugo Extended and defaults to 0.147.7, which is below the Blowfish minimum. The `HUGO_VERSION` build variable selects another version. Builds set `WORKERS_CI_BRANCH` to the pushed branch. |
+| Cloudflare guidance | Cloudflare recommends Workers for new projects, and its dashboard marks Pages as legacy. Workers static assets serve a static site with a `wrangler.jsonc` file and support custom domains and per-branch previews. Preview URLs on `workers.dev` send `X-Robots-Tag: noindex`. |
 
 ## Goals / Non-Goals
 
@@ -56,7 +56,7 @@ Blowfish expects site configuration split across `config/_default/`. Copy its fi
 | Setting | Value | Reason |
 | --- | --- | --- |
 | `theme` | `blowfish` | Enables the theme. |
-| `baseURL` | `https://lb-verein-website.pages.dev/` | Production URL. See Open Questions. |
+| `baseURL` | `https://lebenswertes-lichtenberg.<account-subdomain>.workers.dev/` | Production URL. See Open Questions. |
 | `defaultContentLanguage` | `de` | German-only site. |
 | Language `locale` | `de` | Sets the page language and selects the German translation. |
 | Language `dateFormat` | `2. January 2006` | German date format. |
@@ -93,31 +93,36 @@ Use ASCII slugs, so `content/ueber-uns.md` serves "Über uns" at `/ueber-uns/`. 
 
 Drafts and future-dated content rely on Hugo's defaults (`buildDrafts = false`, `buildFuture = false`), and the local preview (`docker compose up server`, see Decision 8) shows drafts. A future-dated post goes live only on the next build after its date, because there are no scheduled rebuilds.
 
-### 5. Host on Cloudflare Pages with Git integration
+### 5. Host on Cloudflare Workers with Workers Builds
 
-Cloudflare builds on every push, which gives the required production and preview behaviour without any CI code.
+A Worker named `lebenswertes-lichtenberg` serves the static files in `public/` as static assets, with no Worker script. Workers Builds connects it to the GitHub repository and builds on every push, which gives the required production and preview behaviour without any CI code.
+
+`wrangler.jsonc` sets the assets directory, `not_found_handling: "404-page"` so unknown URLs get Hugo's `404.html` with status 404, and `html_handling: "auto-trailing-slash"` for Hugo's `folder/index.html` pages. Workers Builds ignores build settings in that file, so the dashboard holds them:
 
 | Setting | Value |
 | --- | --- |
 | Production branch | `main` |
 | Build command | `sh scripts/cloudflare-build.sh` |
-| Output directory | `public` |
-| Environment variable | `HUGO_VERSION=0.167.0` for production and preview |
+| Deploy command | `npx wrangler deploy` |
+| Preview builds | On for all other branches, with the default preview command `npx wrangler preview` |
+| Build variable | `HUGO_VERSION=0.167.0` |
 | Web Analytics | Off, as required by the no-tracking requirement |
 
-- **Alternative: Direct Upload.** Rejected because it would need a separate CI pipeline to build and upload.
-- **Alternative: Cloudflare Workers static assets.** Cloudflare now recommends this for new projects. Pages was explicitly requested and meets every requirement, and a static site in `public/` can move later with little work.
+Each non-production branch gets its own preview on `workers.dev`, which sends `X-Robots-Tag: noindex` by itself.
+
+- **Alternative: Cloudflare Pages.** Rejected because Cloudflare's dashboard now marks Pages as legacy and new features go to Workers. Pages has no shutdown date, but moving later would mean moving a live site and its custom domain.
+- **Alternative: Direct Upload from a CI pipeline.** Rejected because it adds CI code that Workers Builds makes unnecessary.
 
 ### 6. Select the base URL in a small build script
 
 `scripts/cloudflare-build.sh` prints `hugo version` for the build log, then runs:
 
-- `hugo --gc --minify` when `CF_PAGES_BRANCH` is `main`, using the configured production URL.
-- `hugo --gc --minify --baseURL "$CF_PAGES_URL"` otherwise, so preview links stay on the preview.
+- `hugo --gc --minify` when `WORKERS_CI_BRANCH` is `main`, using the configured production URL.
+- `hugo --gc --minify --baseURL "/"` otherwise, so preview pages use root-relative links and stay on the preview.
 
-The script exits on any error, so a failed build isn't deployed.
+The script exits on any error. Workers Builds runs the deploy or preview command only after the build command succeeds, so a failed build isn't deployed.
 
-- **Alternative: always pass `CF_PAGES_URL`, as Cloudflare's Hugo guide suggests.** Rejected because that variable holds the URL of the current deployment, so production canonical links and the sitemap could point to a per-deployment address.
+- **Alternative: compute the preview address and pass it as `baseURL`.** Rejected because Cloudflare doesn't document how a branch name becomes the preview address. Root-relative links work at any address. Previews then have relative canonical links and sitemap entries, which is harmless because previews aren't indexed.
 - **Alternative: no override.** Rejected because preview pages would link and load assets from production.
 
 ### 7. Mark placeholder content with `PLATZHALTER`
@@ -146,14 +151,14 @@ volumes:
 
 The build command is `docker compose run --rm hugo --gc --minify`, and the preview command is `docker compose up server`, which serves `http://localhost:1313/`.
 
-Cloudflare's Git integration runs its own build image, so production and preview deployments keep using `HUGO_VERSION` (Decision 5). Both environments use the same Hugo version, but not the same image.
+Workers Builds runs its own build image, so production and preview deployments use the `HUGO_VERSION` build variable (Decision 5). Both environments use the same Hugo version, but not the same image.
 
 - **Alternative: plain `docker run` commands.** Rejected because the mounts, port and image tag would have to be repeated in every command.
 - **Alternative: build in the container for production too, using GitHub Actions and Direct Upload.** Rejected because it adds a CI pipeline and replaces the Git integration, for little benefit on a site this simple.
 
 ### 9. Add the banner through the theme's header setting
 
-Blowfish chooses its header partial by name from `header.layout`. Set that to `banner` and add `layouts/partials/header/banner.html`, which calls the theme's `header/floating.html` and then renders the banner strip. The Startseite skips the strip, because the `landing` layout already shows the same photo as a large hero with the site name as its caption. Banner styles go in `assets/css/custom.css`, which the theme loads automatically.
+Blowfish chooses its header partial by name from `header.layout`. Set that to `banner` and add `layouts/partials/header/banner.html`, which calls the theme's `header/floating.html` and then renders the banner strip. The strip reads the Startseite's `heroImage` front matter and crops it with `Fill "1600x400 Center"`, so the banner always shows a band through the middle of the Startseite photo and can't drift to a different image. The Startseite skips the strip, because the `landing` layout already shows that photo as a large hero. Banner styles go in `assets/css/custom.css`, which the theme loads automatically.
 
 - **Alternative: override `baseof.html` or the theme's header.** Rejected because copied layouts must be merged by hand on every theme upgrade.
 - **Alternative: a homepage layout on its own.** Rejected because it only appears on the Startseite, and the banner is required on every page.
@@ -164,14 +169,14 @@ The look follows the Blowfish example site where the theme provides the feature.
 
 ### 10. Store images in the repository
 
-Images live in the repository and are served from the site's own domain, which the no-third-party requirement needs. The Aktuelles image is `content/aktuelles/feature.jpg`, a CC0 sample photo that Hugo resizes for the hero. The banner image is `assets/img/banner.jpg`, a CC BY-SA 4.0 photo of Lichtenberg that Hugo crops to a wide strip. Its license requires visible credit, so the Impressum has a Bildnachweis section, which every page links to from its footer.
+Images live in the repository and are served from the site's own domain, which the no-third-party requirement needs. The Aktuelles image is `content/aktuelles/feature.jpg`, a CC0 sample photo that Hugo resizes for the hero. The Startseite photo is `assets/images/Lichtenberg_20121014.jpeg`, a CC BY-SA 3.0 photo of Lichtenberg by C-Lover from Wikimedia Commons, set in `heroImage`. The banner crops a wide strip from the same file (Decision 9). CC BY-SA licenses require visible credit, so the Datenschutz page has a Bildnachweis section, which every page links to from its footer.
 
 - **Alternative: hotlink images from another site.** Rejected because every page view would send visitor data to that site.
 
 ## Risks / Trade-offs
 
 - **The sample photo misrepresents the location** → The Aktuelles photo shows Amsterdam, not Lichtenberg. The page's `PLATZHALTER` line and the README's launch checklist flag it for replacement.
-- **The image credit gets lost** → Replacing the Impressum placeholder could remove the Bildnachweis section that the banner's license requires. The README's launch checklist covers this.
+- **The image credit gets lost** → Replacing the Datenschutz placeholder could remove the Bildnachweis section that the Startseite photo's license requires. The README's launch checklist covers this.
 - **Published claims create legal exposure** → Statements about a named project or developer can carry legal risk, such as defamation. Sample content invents no names or facts, and the Verein should have real claims checked before publishing them.
 
 - **Local and hosted builds differ beyond the Hugo version** → The container runs on Alpine and Cloudflare on Ubuntu. Preview deployments show the Cloudflare result before anything reaches `main`.
@@ -179,12 +184,13 @@ Images live in the repository and are served from the site's own domain, which t
 - **The container's user can't write to the project on Linux** → The image runs as user `hugo`. Set `user:` in `compose.yaml` if a Linux contributor hits this.
 - **Every editor who builds locally needs Docker** → Editors without Docker can still edit Markdown and review the result on a preview deployment.
 
-- **Placeholder Impressum or Datenschutz goes public** → Git integration publishes every push to `main`, including to a public `pages.dev` address. Complete the legal pages before connecting the Cloudflare project or sharing the URL, and follow the README's launch checklist.
+- **Placeholder Impressum or Datenschutz goes public** → Git integration publishes every push to `main`, including to a public `workers.dev` address. Complete the legal pages before connecting the Worker to the repository or sharing the URL, and follow the README's launch checklist.
 - **Privacy text misses the host** → Cloudflare processes visitor IP addresses even without analytics. The Datenschutz placeholder must name Cloudflare as the host, and whoever supplies the final text should cover this.
 - **Applicable legal requirements are unknown** → Impressum duties differ between countries. This change leaves the wording to the Verein and doesn't assume a jurisdiction.
 - **Theme features add third-party requests** → Blowfish has optional integrations, such as AdSense and Firebase, that load external resources. Leave them unconfigured, and search the generated HTML for external references before launch.
 - **Hosted Hugo isn't the Extended edition or the pinned version** → The first deployment's build log must show `0.167.0` and `+extended`. Forgetting `HUGO_VERSION` falls back to 0.147.7, which is below the theme's minimum. The README lists this setting.
-- **Submodule isn't fetched on Cloudflare** → Cloudflare's Hugo guide uses a submodule theme, so this should work. The first deployment confirms it.
+- **Submodule isn't fetched on Cloudflare** → Workers Builds clones the repository like Pages did, and the theme submodule has a public URL, so this should work. The first deployment confirms it.
+- **`HUGO_VERSION` format differs on Workers Builds** → Cloudflare documents the variable but not the value format for Hugo. The first build log must show `v0.167.0` and `+extended`.
 - **Blowfish falls behind Hugo** → The pin holds Hugo at 0.167.0 until the theme's range moves. This is acceptable for a site with no server-side exposure.
 
 ## Migration Plan
@@ -193,11 +199,11 @@ This is a new site, so nothing needs to be migrated.
 
 1. Implement and verify the site locally.
 2. Create the GitHub repository and push.
-3. Create and configure the Cloudflare Pages project.
+3. Create the Worker through Workers Builds and configure it as in Decision 5.
 4. Verify the production and preview deployments.
 
-**Rollback:** use Cloudflare's dashboard to roll back to an earlier deployment, or revert the commit on `main`.
+**Rollback:** roll back to an earlier deployment in the Worker's Deployments view in the Cloudflare dashboard, or revert the commit on `main`.
 
 ## Open Questions
 
-- **Production domain:** `baseURL` assumes the Cloudflare project is named `lb-verein-website`. If that name is taken or a custom domain is chosen later, only `baseURL` changes.
+- **Production domain:** the Worker is named `lebenswertes-lichtenberg`, so its address is `https://lebenswertes-lichtenberg.<account-subdomain>.workers.dev/`. The account subdomain is known once the Cloudflare account exists, and `baseURL` is set then. The plan is to register `lebenswertes-lichtenberg.at` later and add it to the Worker as a custom domain. Then `baseURL` changes to `https://lebenswertes-lichtenberg.at/`.

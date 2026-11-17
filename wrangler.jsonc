@@ -1,0 +1,14 @@
+// Cloudflare Workers configuration. The site is static: the Worker only serves the
+// files Hugo writes to public/. Workers Builds ignores build settings in this file,
+// so the build command is set in the Cloudflare dashboard (see README, Deployment).
+{
+  "name": "lebenswertes-lichtenberg",
+  "compatibility_date": "2026-11-17",
+  "assets": {
+    "directory": "./public/",
+    // Serve Hugo's 404.html with status 404 for unknown URLs.
+    "not_found_handling": "404-page",
+    // Hugo writes pages as folder/index.html and links to folder/.
+    "html_handling": "auto-trailing-slash"
+  }
+}
