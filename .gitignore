@@ -1,5 +1,6 @@
 # Hugo build output and caches
 public/
+.wrangler/
 resources/_gen/
 .hugo_build.lock
 
