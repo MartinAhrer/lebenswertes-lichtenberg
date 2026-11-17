@@ -12,5 +12,6 @@
     "html_handling": "auto-trailing-slash"
   },
   // Enables per-branch previews; `npx wrangler preview` refuses to run without it.
-  "previews": {}
+  "previews": {},
+  "preview_urls": true
 }
