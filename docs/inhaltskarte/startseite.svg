@@ -93,7 +93,7 @@
   <path class="grey thin" d="M524 772 h150 M524 786 h150 M524 800 h90"/>
   <g class="badge"><rect x="694" y="688" width="32" height="24" rx="12"/><text x="710" y="705" text-anchor="middle">S9</text></g>
   <rect class="grey" x="340.0" y="850" width="120" height="30" rx="8"/>
-  <text class="g" x="400.0" y="870" font-size="14" text-anchor="middle">Zeige Mehr</text>
+  <text class="g" x="400.0" y="870" font-size="14" text-anchor="middle">Weitere Beiträge</text>
   <g class="badge"><rect x="470" y="853" width="41" height="24" rx="12"/><text x="490.0" y="870" text-anchor="middle">S10</text></g>
   <rect class="grey" x="40" y="905" width="720" height="44" rx="8" stroke-dasharray="6 6"/>
   <text class="g" x="60" y="932" font-size="14" text-anchor="start">Fußzeile: Impressum · Datenschutz · <tspan class="sym">©</tspan> · Nach oben</text>

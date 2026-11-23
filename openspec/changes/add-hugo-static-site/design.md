@@ -56,7 +56,7 @@ Blowfish expects site configuration split across `config/_default/`. Copy its fi
 | Setting | Value | Reason |
 | --- | --- | --- |
 | `theme` | `blowfish` | Enables the theme. |
-| `baseURL` | `https://lebenswertes-lichtenberg.<account-subdomain>.workers.dev/` | Production URL. See Open Questions. |
+| `baseURL` | `https://lebenswertes-lichtenberg.this-7f8.workers.dev/` | Production URL. See Open Questions. |
 | `defaultContentLanguage` | `de` | German-only site. |
 | Language `locale` | `de` | Sets the page language and selects the German translation. |
 | Language `dateFormat` | `2. January 2006` | German date format. |
@@ -97,7 +97,7 @@ Drafts and future-dated content rely on Hugo's defaults (`buildDrafts = false`, 
 
 A Worker named `lebenswertes-lichtenberg` serves the static files in `public/` as static assets, with no Worker script. Workers Builds connects it to the GitHub repository and builds on every push, which gives the required production and preview behaviour without any CI code.
 
-`wrangler.jsonc` sets the assets directory, `not_found_handling: "404-page"` so unknown URLs get Hugo's `404.html` with status 404, and `html_handling: "auto-trailing-slash"` for Hugo's `folder/index.html` pages. Workers Builds ignores build settings in that file, so the dashboard holds them:
+`wrangler.jsonc` sets the assets directory, `not_found_handling: "404-page"` so unknown URLs get Hugo's `404.html` with status 404, and `html_handling: "auto-trailing-slash"` for Hugo's `folder/index.html` pages. An empty `previews` block enables Worker Previews, which `npx wrangler preview` requires. Each preview is named after its git branch. Wrangler marks Worker Previews as an open beta. Workers Builds ignores build settings in that file, so the dashboard holds them:
 
 | Setting | Value |
 | --- | --- |

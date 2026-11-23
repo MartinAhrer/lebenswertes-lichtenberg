@@ -58,7 +58,7 @@ Datei: `content/_index.md`. Die Felder `S1` bis `S5` stehen oben im Kopfbereich 
 | S7 | Freitext | Ergänzender Hinweis unter den Karten | 1 bis 2 Absätze, je höchstens 300 Zeichen | Text nach `{{< /feature-grid >}}` |
 | S8 | Überschrift „Neue Beiträge“ | Leitet die Liste der Beiträge ein | fest eingestellt | – |
 | S9 | Beitragskarten | Die 5 neuesten Beiträge als Karten | automatisch aus den Beiträgen: Titel (`B2`), Datum (`B3`), Lesezeit (`B4`), Bild (`B1`) und Vorschautext | Vorschautext: Feld `summary` im Beitrag, höchstens 150 Zeichen; ohne `summary` der Anfang des Beitragstexts, nach 5 Zeilen abgeschnitten |
-| S10 | Button „Zeige Mehr“ | Führt zur Seite Aktuelles | automatisch | – |
+| S10 | Button „Weitere Beiträge“ | Führt zur Seite Aktuelles | fest eingestellt | Übersetzung `recent.show_more` in `i18n/de.yaml` |
 
 Für die Symbole in `S6` passen zum Beispiel `circle-info`, `list-check`, `heart`, `envelope`, `location-dot`, `bell`, `lightbulb` oder `scale-balanced`. Alle verfügbaren Namen stehen im Ordner `themes/blowfish/assets/icons/`.
 
