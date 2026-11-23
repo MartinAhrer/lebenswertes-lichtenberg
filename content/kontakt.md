@@ -2,18 +2,11 @@
 title: "Kontakt"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
 ## So erreichen Sie uns
 
-**Lorem Ipsum Verein**\
-Musterstraße 1\
-0000 Musterort
+Adresse: Eschenstraße 6, 4040 Lichtenberg
 
-E-Mail: kontakt@example.org
+E-Mail: [Jürgen Maaß](aon.914688796@aon.at)
 
-## Mitmachen
+Telefon: +43 07239 20183
 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.
-
-*PLATZHALTER: Beispieltext. Echte Anschrift und E-Mail-Adresse des Vereins eintragen.*

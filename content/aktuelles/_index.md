@@ -8,6 +8,4 @@ cascade:
   showPagination: true
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-
-*PLATZHALTER: Beispieltext und Beispielbild. Durch echte Inhalte des Vereins ersetzen.*
+Hier werden aktuelle Beiträge veröffentlicht.
